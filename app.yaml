@@ -1,7 +1,11 @@
 application: gobycicle
-version: 1
+module: gobycicle
+version: uno
 runtime: go
 api_version: go1
+instance_class: B1
+manual_scaling:
+  instances: 1
 
 handlers:
 - url: /.*

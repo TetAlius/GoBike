@@ -34,5 +34,11 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	// [END if_user]
 	// [START output]
 	fmt.Fprintf(w, "Hello, %v! This is a test :)", u)
+
+	//Test for module communication by Menti
+	module := appengine.ModuleName(c)
+	//instance := appengine.InstanceID()
+	fmt.Fprintf(w, module)
+
 	// [END output]
 }

@@ -1,4 +1,5 @@
 # Created by http://www.gitignore.io
+# appcfg.py --oauth2 update .
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
@@ -212,4 +213,3 @@ target/
 ### AppEngine ###
 # Google App Engine - https://developers.google.com/appengine/
 appengine-generated/
-
