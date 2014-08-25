@@ -4,41 +4,87 @@ import (
 	"fmt"
 	"net/http"
 
+	"text/template"
+	"time"
+
 	"appengine"
-	"appengine/user"
+	"appengine/datastore"
 )
+
+type TestDatabase struct {
+	Name       string
+	Number     int
+	Date       time.Time
+	Content    string
+	MoarNumber int64
+}
 
 func init() {
 	http.HandleFunc("/", handler)
+	http.HandleFunc("/query", handlerQuery)
 
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// [START new_context]
 	c := appengine.NewContext(r)
-	// [END new_context]
-	// [START get_current_user]
-	u := user.Current(c)
-	// [END get_current_user]
-	// [START if_user]
-	if u == nil {
-		url, err := user.LoginURL(c, r.URL.String())
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		w.Header().Set("Location", url)
-		w.WriteHeader(http.StatusFound)
+	g := TestDatabase{
+		Name:       "Menti",
+		Number:     23,
+		Date:       time.Now(),
+		Content:    "Hola ke ase",
+		MoarNumber: 232323,
+	}
+
+	key := datastore.NewIncompleteKey(c, "Testing", getId(c))
+	_, err := datastore.Put(c, key, &g)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	// [END if_user]
-	// [START output]
-	fmt.Fprintf(w, "Hello, %v! This is a test :)", u)
 
-	//Test for module communication by Menti
-	module := appengine.ModuleName(c)
-	//instance := appengine.InstanceID()
-	fmt.Fprintf(w, module)
+	fmt.Fprintf(w, "Señorin añadido")
 
-	// [END output]
+}
+
+func handlerQuery(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	q := datastore.NewQuery("Testing").Ancestor(getId(c)).Order("-Date").Limit(10)
+	testing := make([]TestDatabase, 0, 10)
+
+	if _, err := q.GetAll(c, &testing); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := guestbookTemplate.Execute(w, testing); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+}
+
+var guestbookTemplate = template.Must(template.New("test").Parse(`
+<html>
+  <head>
+    <title>Go Testing Database</title>
+  </head>
+  <body>
+    {{range .}}
+      {{with .Name}}
+        <p><b>{{.}}</b> wrote:</p>
+      {{else}}
+        <p>An anonymous person wrote:</p>
+      {{end}}
+      <pre>{{.Content}}</pre>
+    {{end}}
+    <form action="/sign" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+  </body>
+</html>
+`))
+
+func getId(c appengine.Context) *datastore.Key {
+	return datastore.NewKey(c, "Testing", "default_testing", 0, nil)
 }

@@ -1,5 +1,4 @@
 application: gobycicle
-module: gobycicle
 version: uno
 runtime: go
 api_version: go1
