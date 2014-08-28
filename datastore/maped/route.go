@@ -25,4 +25,5 @@ type Route struct {
 	score          string
 	signal         bool
 	beginTransport bool
+	routeUrl	url
 }
