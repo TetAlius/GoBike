@@ -1,2 +1,5 @@
 GoBike
 ======
+
+Current structure:
+	* datastore
