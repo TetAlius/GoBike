@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Route the routes
 type Route struct {
 	title          string
 	description    string
