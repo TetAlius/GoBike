@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--	<link rel="icon" href="ico/favicon.ico"> -->
+    <title>GoBike - {{.title}}</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+  </head>
+	<body>
+    <!--  <h1>{{.title}}</h1>
+      <p>{{.description}}</p>
+      <p>{{.distance}}</p>
+      <p>{{.beginLoc}}</p>
+      <p>{{.endLoc}}</p>
+      <p>{{.difficulty}}</p>
+      <p>{{.author}}</p>
+      <p>{{.maps}}</p>
+      <p>{{.duration}}</p>
+      <p>{{.score}}</p>
+      {{range .comments}}
+        <p>{{.}}</p>
+      {{end}} -->
+      <div id="routeCarousel" class="sticky carousel slide col-6 col-sm-6 col-lg4 pull-right" data-ride="carousel"  data-interval="2000">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+              <li data-target="#routeCarousel" data-slide-to="0" class="active"></li>
+              <li data-target="#routeCarousel" data-slide-to="1"></li>
+              <li data-target="#routeCarousel" data-slide-to="2"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+              <div class="item active">
+                <img src="http://scienceblogs.com/gregladen/files/2012/12/Beautifull-cat-cats-14749885-1600-1200.jpg" alt="First slide">
+              </div>
+              <div class="item">
+                <img src="http://i.huffpost.com/gen/1860407/thumbs/o-BLACK-FOOTED-CAT-KITTENS-facebook.jpg" alt="Second slide">
+              </div>
+              <div class="item">
+                <img src="http://hdwallpaper.freehdw.com/0008/animals_widewallpaper_cat_74664.jpg" alt="Third slide">
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#routeCarousel" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#routeCarousel" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+          </div>
+      </div>
+
+    <h1>TITULO <small>distancia, duracion, puntuacion...</small></h1>
+    <p class="lead">AUTOR (?)</p>
+    <p> DESCRIPCION Lorem ipsum dolor sit amet, ex vivendo vulputate sea, mel scaevola persecuti definitionem id, ea regione disputationi eum. Eum ut omnium persecuti interesset. Duo noster causae ad, ne rebum novum ignota sit. Sit verear aperiri temporibus ne, movet semper accommodare et vel. Alii saepe accusata ex vim, no commodo hendrerit mei. Esse iudico imperdiet ut vis, est tota erat ex. Et sed apeirian adolescens, ne deserunt argumentum his, est id inani persius.
+
+Eam ut lucilius interesset deterruisset, mandamus corrumpit ius no. Alia doming possim te eos, vocent antiopam expetenda te eam. Et natum saepe vix, alterum facilis eum in. Ius quaeque sensibus tractatos ut, id vim harum primis postulant. Ne nominati expetendis nec.
+
+Eam te quando facilis efficiantur, graeco veritus mea ei, ea dicit instructior eum. Nec commodo probatus te, brute partem labores quo id, porro vituperata sed ad. Ius ne adhuc noster. Postea dictas no pro. Quodsi oblique nam ea, mei te minim quaeque posidonium. In prima splendide vituperata ius, ei amet exerci omittantur vim. Ei duo animal tibique, vidit indoctum ut vix.
+
+No vim noster suscipit eleifend. Cu quis iriure qualisque his, te assum eripuit sit. Et diam harum contentiones sed, ad sit odio soluta constituto, in congue audire vix. Ex eum pericula electram, facete denique ocurreret duo no, vis ad iudico commodo vulputate. Simul causae dolorum mea an.
+
+Tota assueverit eloquentiam duo eu, lorem graeci ex ius, falli electram usu ex. Eu pri laoreet efficiendi. Noluisse inimicus iracundia ex eum. Ex fuisset adversarium mei, qui oportere pertinacia id, pro hinc ipsum sapientem at.</p>
+
+    </div><!--/.container-->
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../js/bootstrap.js"></script>
+    <script>
+    $('.carousel').carousel({
+        interval: 2000
+    })
+</script>
+    </body>
+
+</html>
