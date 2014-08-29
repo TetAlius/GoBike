@@ -1,4 +1,0 @@
-application: gobycicle
-dispatch:
-  - url: /.*
-    module: default

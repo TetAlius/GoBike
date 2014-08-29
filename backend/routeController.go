@@ -19,9 +19,3 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 	}
 	return
 }
-
-//TestConnection Test connection
-func TestConnection() string {
-	s := "Hola ke ase"
-	return s
-}
