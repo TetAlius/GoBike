@@ -1,0 +1,7 @@
+/*!
+ * We'll put our own css here :D
+ */
+
+.carousel-control.left, .carousel-control.right {
+	background: none;
+}
