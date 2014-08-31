@@ -1,7 +1,6 @@
 package frontend
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"time"
@@ -32,13 +31,13 @@ func init() {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "root")
+	http.ServeFile(w, r, "./index.html")
 }
 
 func routesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
-	t, err := template.ParseFiles("frontend/resources/html/all-routes.html")
+	t, err := template.ParseFiles("./all-routes.html")
 	if err != nil {
 		log.Fatal("Parse file error: ", err)
 	}

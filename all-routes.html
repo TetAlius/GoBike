@@ -18,13 +18,17 @@
     {{range .}}
     <p><a href="/routes/{{.Title}}">edit</a></p>
     {{end}}
+
     <div class="row centered">
+	{{range .}}
       <div class="col-4 col-sm-4 col-lg3">
         <h2>{{.Title}}</h2>
         <img class="img-responsive" src="" alt=""/>
         <p>{{.Description}}</p>
         <p><a class="btn btn-default" href="#" role="button">More details</a></p>
-      </div>
+	{{end}}
+    </div>
+	 
 <!--
       <div class="col-4 col-sm-4 col-lg3">
         <h2>HEADIIIING</h2>
