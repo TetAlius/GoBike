@@ -18,13 +18,13 @@ import (
 func init() {
 
 	//Resources
-	cssFileServer := http.StripPrefix("/css/", http.FileServer(http.Dir("resources/css/")))
+	cssFileServer := http.StripPrefix("/css/", http.FileServer(http.Dir("frontend/resources/css/")))
 	http.Handle("/css/", cssFileServer)
 
-	jsFileServer := http.StripPrefix("/js/", http.FileServer(http.Dir("resources/js/")))
+	jsFileServer := http.StripPrefix("/js/", http.FileServer(http.Dir("frontend/resources/js/")))
 	http.Handle("/js/", jsFileServer)
 
-	fontsFileServer := http.StripPrefix("/fonts/", http.FileServer(http.Dir("resources/fonts/")))
+	fontsFileServer := http.StripPrefix("/fonts/", http.FileServer(http.Dir("frontend/resources/fonts/")))
 	http.Handle("/fonts/", fontsFileServer)
 
 	http.HandleFunc("/", handler)
@@ -38,7 +38,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 func routesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
-	t, err := template.ParseFiles("resources/html/all-routes.html")
+	t, err := template.ParseFiles("frontend/resources/html/all-routes.html")
 	if err != nil {
 		log.Fatal("Parse file error: ", err)
 	}
