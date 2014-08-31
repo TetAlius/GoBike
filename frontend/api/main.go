@@ -10,34 +10,40 @@ import (
 	"appengine"
 	"appengine/datastore"
 
-	"github.com/GoBike/backend"
-	"github.com/GoBike/backend/maped"
+	"github.com/TetAlius/GoBike/backend"
+	"github.com/TetAlius/GoBike/backend/maped"
 )
 
 func init() {
-
 	//Resources
-	cssFileServer := http.StripPrefix("/css/", http.FileServer(http.Dir("frontend/resources/css/")))
+	cssFileServer := http.StripPrefix("/css/", http.FileServer(http.Dir("./frontend/resources/css/")))
 	http.Handle("/css/", cssFileServer)
-
-	jsFileServer := http.StripPrefix("/js/", http.FileServer(http.Dir("frontend/resources/js/")))
+	jsFileServer := http.StripPrefix("/js/", http.FileServer(http.Dir("./frontend/resources/js/")))
 	http.Handle("/js/", jsFileServer)
-
-	fontsFileServer := http.StripPrefix("/fonts/", http.FileServer(http.Dir("frontend/resources/fonts/")))
+	fontsFileServer := http.StripPrefix("/fonts/", http.FileServer(http.Dir("./frontend/resources/fonts/")))
 	http.Handle("/fonts/", fontsFileServer)
 
+	//Handlers
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/routes", routesHandler)
 }
 
+func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
+	http.ServeFile(w, r, "./frontend/resources/html/notfound.html")
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "./index.html")
+	if r.URL.Path != "/" {
+		errorHandler(w, r, http.StatusNotFound)
+		return
+	}
+	http.ServeFile(w, r, "./frontend/resources/html/index.html")
 }
 
 func routesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
-	t, err := template.ParseFiles("./all-routes.html")
+	t, err := template.ParseFiles("./frontend/resources/html/all-routes.html")
 	if err != nil {
 		log.Fatal("Parse file error: ", err)
 	}

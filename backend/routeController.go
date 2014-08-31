@@ -3,7 +3,7 @@ package backend
 import (
 	"errors"
 
-	"backend/maped"
+	"github.com/TetAlius/GoBike/backend/maped"
 
 	"appengine"
 	"appengine/datastore"
