@@ -1,7 +1,16 @@
 /*!
  * We'll put our own css here :D
  */
-
 .carousel-control.left, .carousel-control.right {
 	background: none;
+}
+
+.navbar {
+	border:none;
+	border-radius:0;
+}
+.btn {
+	border:none;
+	border-radius:0;
+	background:#d3d3d3;
 }
