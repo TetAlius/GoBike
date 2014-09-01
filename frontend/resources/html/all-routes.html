@@ -13,6 +13,7 @@
   </head>
   <body>
     <div class="container">
+      {{template "login"}}
     <div class="row centered">
       {{range .}}
       <div class="col-4 col-sm-4 col-lg3">
@@ -22,6 +23,8 @@
         <p><a class="btn btn-default" href="/route/{{.Title}}" role="button">More details</a></p>
       </div>
       {{end}}
+
+
 
   </div><!--/.row-->
   </div><!--/.container-->
