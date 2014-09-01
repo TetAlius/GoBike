@@ -28,6 +28,7 @@ func init() {
 	http.HandleFunc("/", routesHandler)
 	http.HandleFunc("/route/", singleRouteHandler)
 	http.HandleFunc("/insert", insertRoutesHandler)
+	http.HandleFunc("/login", loginHandler)
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
@@ -42,7 +43,7 @@ func routesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	c := appengine.NewContext(r)
 
-	t, err := template.ParseFiles("./frontend/resources/html/all-routes.html")
+	t, err := template.ParseFiles("./frontend/resources/html/all-routes.html", "./frontend/resources/html/login.html")
 	if err != nil {
 		log.Fatal("Parse file error: ", err)
 	}
@@ -63,6 +64,13 @@ func singleRouteHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		t.Execute(w, title)*/
 	fmt.Fprintf(w, title)
+}
+
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+
+	coso := r.FormValue("id")
+
+	fmt.Fprintf(w, coso)
 }
 
 func insertRoutesHandler(w http.ResponseWriter, r *http.Request) {
