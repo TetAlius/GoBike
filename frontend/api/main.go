@@ -1,6 +1,7 @@
 package frontend
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"time"
@@ -24,23 +25,21 @@ func init() {
 	http.Handle("/fonts/", fontsFileServer)
 
 	//Handlers
-	http.HandleFunc("/", handler)
-	http.HandleFunc("/routes", routesHandler)
+	http.HandleFunc("/", routesHandler)
+	http.HandleFunc("/route/", singleRouteHandler)
+	http.HandleFunc("/insert", insertRoutesHandler)
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	http.ServeFile(w, r, "./frontend/resources/html/notfound.html")
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func routesHandler(w http.ResponseWriter, r *http.Request) {
+	// 404 page
 	if r.URL.Path != "/" {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
-	http.ServeFile(w, r, "./frontend/resources/html/index.html")
-}
-
-func routesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 
 	t, err := template.ParseFiles("./frontend/resources/html/all-routes.html")
@@ -53,6 +52,17 @@ func routesHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("GetAllRoutes error: ", err)
 	}
 	t.Execute(w, routes)
+}
+
+func singleRouteHandler(w http.ResponseWriter, r *http.Request) {
+	title := r.URL.Path[len("/route/"):]
+	/*
+		t, err := template.ParseFiles("./frontend/resources/html/route-template.html")
+		if err != nil {
+			log.Fatal("Parse file error: ", err)
+		}
+		t.Execute(w, title)*/
+	fmt.Fprintf(w, title)
 }
 
 func insertRoutesHandler(w http.ResponseWriter, r *http.Request) {
