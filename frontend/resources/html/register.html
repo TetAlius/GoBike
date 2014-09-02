@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "head" .}}
+<body>
+  <div id="wrap">
+    {{template "login"}}
+    <div class="container">
+      <form id="register" role="register" method="post" action="/registerPost">
+        <div class="form-group">
+          <label for="inputUsername">Username</label>
+          <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Email</label>
+          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="inputFirstPassword">Password</label>
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label for="inputRepeatPassword">Repeat password</label>
+          <input type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat password">
+        </div>
+          <button type="submit" class="btn btn-default">Sign Up</button>
+        </form>
+</div><!--/.container-->
+</div><!--/.wrap-->
+{{template "bootscript"}}
+{{template "loginscript"}}
+<script src="/js/validator.js"></script>
+</body>
+</html>
