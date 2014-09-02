@@ -1,13 +1,11 @@
 package backend
 
-import (
-	"errors"
+/*
+PRIMERA VERSION DEL LOGIN
+FUENTE: http://www.mschoebel.info/2014/03/09/snippet-golang-webapp-login-logout.html
 
-	"net/http"
 
-	"appengine"
-	"appengine/datastore"
-)
+
 
 func login(response http.ResponseWriter, request *http.Request) {
 	name := request.FormValue("name")
@@ -37,7 +35,6 @@ func checkCredentials(name, password string) bool {
 	if usr != nil {
 		return true
 	}
-
 	return false
 
 }
@@ -70,3 +67,4 @@ func clearSession(response http.ResponseWriter) {
 	}
 	http.SetCookie(response, cookie)
 }
+*/
