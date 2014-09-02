@@ -2,6 +2,8 @@ package backend
 
 import (
 	"errors"
+	"net/http"
+	"time"
 
 	"github.com/TetAlius/GoBike/backend/maped"
 
@@ -24,4 +26,36 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 func routeKey(c appengine.Context) *datastore.Key {
 	// The string "default_guestbook" here could be varied to have multiple guestbooks.
 	return datastore.NewKey(c, "Routes", "default_route", 0, nil)
+}
+
+func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	g := maped.Route{
+		Title:          "Salas - Pola de Allande",
+		Description:    "Pues ni puta idea, porque cuando lelgamos al puticlub \"Nenas\" nos volvimos con la rodilla debajo del brazo",
+		CreationDate:   time.Now(),
+		Distance:       52,
+		BeginLoc:       "Salas",
+		EndLoc:         "Pola de Allande",
+		Difficulty:     "Depende de tu rodilla",
+		Road:           true,
+		Mountain:       true,
+		Path:           false,
+		Comments:       []string{"Mola pila", "Habia gastroenteritis", "Rompi la rodilla", "No sabia que los paragüayos hablaban"},
+		Author:         "Menti",
+		Maps:           "mira como mola __-/^^^^^^^\\____",
+		Duration:       time.Now(),
+		Slope:          1200,
+		Photos:         "nah",
+		Score:          "over 9000",
+		Signal:         true,
+		BeginTransport: true,
+	}
+	key := datastore.NewIncompleteKey(c, "Routes", routeKey(c))
+	_, err := datastore.Put(c, key, &g)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
 }
