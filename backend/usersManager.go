@@ -1,5 +1,51 @@
 package backend
 
+import (
+	"github.com/TetAlius/GoBike/backend/maped"
+
+	"appengine"
+	"appengine/datastore"
+)
+
+func registerUser(user maped.User) {
+
+}
+
+// AvailableUserToRegister checks if the username or email are being used in a user
+func AvailableUserToRegister(context appengine.Context, username string, email string) bool {
+	query := datastore.NewQuery("Users").Ancestor(userKey(context)).
+		Filter("username =", username)
+	var users []maped.User
+	_, err := query.GetAll(context, &users)
+
+	if len(users) > 0 {
+		return false
+	}
+
+	query = datastore.NewQuery("Users").Ancestor(userKey(context)).
+		Filter("email =", email)
+	_, err = query.GetAll(context, &users)
+	if len(users) > 0 || err != nil {
+		return false
+	}
+	return true
+}
+
+// RegisterUser register a new User in the datastore, if the operation
+// fails then ir will return a 'false'
+func RegisterUser(context appengine.Context, user maped.User) bool {
+	key := datastore.NewIncompleteKey(context, "Users", routeKey(context))
+	_, err := datastore.Put(context, key, &user)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+func userKey(c appengine.Context) *datastore.Key {
+	return datastore.NewKey(c, "Users", "default_user", 0, nil)
+}
+
 /*
 PRIMERA VERSION DEL LOGIN
 FUENTE: http://www.mschoebel.info/2014/03/09/snippet-golang-webapp-login-logout.html

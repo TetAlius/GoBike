@@ -21,4 +21,5 @@ func init() {
 	http.HandleFunc("/insert", backend.InsertRoutesHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
+	http.HandleFunc("/registerPost", registerPostHandler)
 }

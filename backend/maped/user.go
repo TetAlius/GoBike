@@ -6,12 +6,12 @@ import (
 
 // User the users
 type User struct {
-	username        string    // the user name
-	since       time.Time // the day when the account was created
-	alreadyDone []Route
-	email		string
-	name 		string
-	surname 	string
-	birthDate	string
-	password	string
+	Username    string    // the user name
+	Since       time.Time // the day when the account was created
+	AlreadyDone []Route
+	Email       string
+	Name        string
+	Surname     string
+	BirthDate   string
+	Password    string
 }

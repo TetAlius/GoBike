@@ -4,6 +4,11 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+
+	"appengine"
+
+	"github.com/TetAlius/GoBike/backend"
+	"github.com/TetAlius/GoBike/backend/maped"
 )
 
 func registerHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,4 +18,22 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("Parse file error: ", err)
 	}
 	t.Execute(w, map[string]string{"PageTitle": "GoBike - Register"})
+}
+
+func registerPostHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	result := backend.AvailableUserToRegister(c, r.FormValue("Username"), r.FormValue("Email"))
+	if result {
+		user := maped.User{}
+		user.Username = r.FormValue("Username")
+		user.Email = r.FormValue("Email")
+		registerResult := backend.RegisterUser(c, user)
+		if registerResult {
+			http.Redirect(w, r, "/", http.StatusFound)
+		} else {
+			http.Redirect(w, r, "/register", http.StatusFound)
+		}
+	} else {
+		http.Redirect(w, r, "/register", http.StatusFound)
+	}
 }

@@ -24,7 +24,6 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 }
 
 func routeKey(c appengine.Context) *datastore.Key {
-	// The string "default_guestbook" here could be varied to have multiple guestbooks.
 	return datastore.NewKey(c, "Routes", "default_route", 0, nil)
 }
 
