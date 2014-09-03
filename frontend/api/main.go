@@ -17,6 +17,7 @@ func init() {
 
 	//Handlers
 	http.HandleFunc("/", routesHandler)
+	http.HandleFunc("/google", loginGoogleHandler)
 	http.HandleFunc("/route/", singleRouteHandler)
 	http.HandleFunc("/insert", backend.InsertRoutesHandler)
 	http.HandleFunc("/login", loginHandler)
