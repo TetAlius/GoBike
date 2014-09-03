@@ -21,5 +21,5 @@ func loginGoogleHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusFound)
 		return
 	}
-	fmt.Fprintf(w, "Hello, %v!", u)
+	fmt.Fprintf(w, "Hello, %v!", u.ID)
 }
