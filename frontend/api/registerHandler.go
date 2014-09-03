@@ -1,6 +1,7 @@
 package frontend
 
 import (
+	"encoding/hex"
 	"html/template"
 	"log"
 	"net/http"
@@ -31,6 +32,13 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		user := maped.User{}
 		user.Username = r.FormValue("Username")
 		user.Email = r.FormValue("Email")
+		user.Active = false
+		//Create and insert the hash for the user
+		byteHash := []byte(user.Username + user.Email + user.Username + user.Email)
+		hashlink := hex.EncodeToString(byteHash)
+		user.HashLink = hashlink
+		c.Infof(hashlink)
+
 		registerResult := backend.RegisterUser(c, user)
 		if registerResult {
 			http.Redirect(w, r, "/", http.StatusFound)

@@ -16,4 +16,6 @@ type User struct {
 	Surname     string
 	BirthDate   string
 	Password    string
+	Active      bool
+	HashLink    string
 }

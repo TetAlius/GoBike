@@ -14,7 +14,8 @@ func registerUser(user maped.User) {
 // AvailableUserToRegister checks if the username or email are being used in a user
 func AvailableUserToRegister(context appengine.Context, username string, email string) bool {
 	query := datastore.NewQuery("Users").
-		Filter("Username =", username)
+		Filter("Username =", username).
+		Filter("Active =", true)
 	var users []maped.User
 	_, err := query.GetAll(context, &users)
 
@@ -23,7 +24,8 @@ func AvailableUserToRegister(context appengine.Context, username string, email s
 	}
 
 	query = datastore.NewQuery("Users").
-		Filter("Email =", email)
+		Filter("Email =", email).
+		Filter("Active =", true)
 	_, err = query.GetAll(context, &users)
 	if len(users) > 0 || err != nil {
 		return false
