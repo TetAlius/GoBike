@@ -7,6 +7,8 @@ import (
 
 	"appengine"
 
+	"strconv"
+
 	"github.com/TetAlius/GoBike/backend"
 	"github.com/TetAlius/GoBike/backend/maped"
 )
@@ -22,7 +24,9 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
+	c.Infof("Trying to register a new User")
 	result := backend.AvailableUserToRegister(c, r.FormValue("Username"), r.FormValue("Email"))
+	c.Infof("Available user: " + strconv.FormatBool(result))
 	if result {
 		user := maped.User{}
 		user.Username = r.FormValue("Username")

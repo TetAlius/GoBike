@@ -13,17 +13,17 @@ func registerUser(user maped.User) {
 
 // AvailableUserToRegister checks if the username or email are being used in a user
 func AvailableUserToRegister(context appengine.Context, username string, email string) bool {
-	query := datastore.NewQuery("Users").Ancestor(userKey(context)).
-		Filter("username =", username)
+	query := datastore.NewQuery("Users").
+		Filter("Username =", username)
 	var users []maped.User
 	_, err := query.GetAll(context, &users)
 
-	if len(users) > 0 {
+	if len(users) > 0 || err != nil {
 		return false
 	}
 
-	query = datastore.NewQuery("Users").Ancestor(userKey(context)).
-		Filter("email =", email)
+	query = datastore.NewQuery("Users").
+		Filter("Email =", email)
 	_, err = query.GetAll(context, &users)
 	if len(users) > 0 || err != nil {
 		return false
@@ -34,9 +34,12 @@ func AvailableUserToRegister(context appengine.Context, username string, email s
 // RegisterUser register a new User in the datastore, if the operation
 // fails then ir will return a 'false'
 func RegisterUser(context appengine.Context, user maped.User) bool {
+	context.Infof("Registering " + user.Username)
 	key := datastore.NewIncompleteKey(context, "Users", routeKey(context))
+	context.Infof("Getting the datastore key")
 	_, err := datastore.Put(context, key, &user)
 	if err != nil {
+		context.Errorf(err.Error())
 		return false
 	}
 	return true
