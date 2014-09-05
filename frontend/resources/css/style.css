@@ -12,5 +12,7 @@
 .btn {
 	border:none;
 	border-radius:0;
-	background:#d3d3d3;
 }
+/*.btn-success.disabled {
+	background-color:#ff6666;
+}*/
