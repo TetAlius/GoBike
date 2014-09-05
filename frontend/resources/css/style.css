@@ -61,6 +61,33 @@
 	color: #fff;
 	background-color: #56739c;
 }
-/*.btn-success.disabled {
-	background-color:#ff6666;
-}*/
+.btn-login.disabled,
+.btn-login[disabled],
+fieldset[disabled] .btn-login,
+.btn-login.disabled:hover,
+.btn-login[disabled]:hover,
+fieldset[disabled] .btn-login:hover,
+.btn-login.disabled:focus,
+.btn-login[disabled]:focus,
+fieldset[disabled] .btn-login:focus,
+.btn-login.disabled:active,
+.btn-login[disabled]:active,
+fieldset[disabled] .btn-login:active,
+.btn-login.disabled.active,
+.btn-login[disabled].active,
+fieldset[disabled] .btn-login.active {
+	background-color: #E86666;
+}
+
+.btn-login {
+	background-color:#95CC70;
+}
+
+.btn-login:hover,
+.btn-login:focus,
+.btn-login:active,
+.btn-login.active,
+.open > .dropdown-toggle.btn-login {
+	color: #fff;
+	background-color: #77a359;
+}
