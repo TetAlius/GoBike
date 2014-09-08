@@ -1,0 +1,63 @@
+.sticky-right{
+  position: fixed;
+  top: 50%;
+  right: 0px;
+ width:auto;
+    float: right;
+  height: 0px;
+  text-align:right;
+  z-index:9999;
+    margin-top:-15px;
+
+}
+.right-vertical{
+	transform: rotate(270deg);
+}
+
+<div id="filter-panel" class="collapse filter-panel col-md-4 pull-right">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-default" role="form">
+                        <div class="form-group row">
+                          <label class="filter-col" for="distance">Distance:</label>
+                          <input id="distance" type="range">
+                        </div> <!-- form group [distance] -->
+                      	<div class="form-group row">
+                          <label class="filter-col" for="difficulty">Difficulty:</label>
+                          <select id="difficulty">
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="difficult">Difficult</option>
+                          </select>
+                        </div> <!-- form group [difficulty] -->
+                        <div class="form-group row">
+                          <label class="filter-col" for="score">Score:</label>
+                          <input id="score" type="text">
+                        </div> <!-- form group [score] -->
+                      <div class="form-group row">
+                          <label class="filter-col" for="duration">Duration:</label>
+                          <input id="duration" type="number">
+                        </div> <!-- form group [duration] -->
+                      <div class="form-group row">
+                          <label class="filter-col" for="slope">Slope:</label>
+                          <input id="slope" type="number" step="any" min"0">
+                        </div> <!-- form group [slope] -->
+                      <div class="form-group row">
+                          <label class="filter-col" for="total_ascent">Total Ascent:</label>
+                          <input id="total_ascent" type="number" step="any" min"0">
+                        </div> <!-- form group [total_ascent] -->
+                      <input type="checkbox" name="road" value="Road">Road
+                      <input type="checkbox" name="mountain" value="Mountain">Mountain
+                      <input type="checkbox" name="path" value="Path">Path
+                      <input type="checkbox" name="signal" value="Signal">Signal
+                      <input type="checkbox" name="begin_transport" value="Transport">Begin Transport<br>
+                      <input type="checkbox" name="garage" value="Garage">Garage
+                    </form>
+                </div>
+            </div>
+        </div>
+<div class="right-vertical sticky-right">
+		<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+            Filters
+        </button>
+</div>
