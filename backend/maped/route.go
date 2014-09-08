@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-// Route the routes
+// Route a route
 type Route struct {
 	Title          string
 	Description    string
@@ -28,4 +28,16 @@ type Route struct {
 	BeginTransport bool   // filter
 	Garage         bool   // filter
 
+}
+
+// Routes the routes
+type Routes []*Route
+
+// Delete a given route in a routes slice
+func (r Routes) Delete(pos int) (err error) {
+	//routes := r
+	routes[pos] = routes[len(routes)-1]
+	routes = routes[:len(routes)-1]
+
+	return
 }

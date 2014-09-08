@@ -17,7 +17,7 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 	routes = make([]maped.Route, 0, 10)
 	_, err = query.GetAll(context, &routes)
 	if err != nil {
-		context.Errorf("Can´t load the routes: %e", err)
+		context.Errorf("Can´t load the routes: %s", err)
 		err = errors.New("Can't load the routes")
 	}
 
@@ -27,28 +27,28 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 func filterDistance(distanceMin string, distanceMax string, routes []maped.Route) (err error) {
 	min, _ := strconv.ParseFloat(distanceMin, 64)
 	max, _ := strconv.ParseFloat(distanceMax, 64)
-	for key, route := range routes {
+	for pos, route := range routes {
 		if route.Distance < min && route.Distance > max {
-			delete(routes, key)
+			routes.delete(pos)
 		}
 	}
 	return
 }
 
-func filterDifficulty(difficulty string, routes []maped.Route) (err error) {
-	for key, route := range routes {
+func filterDifficulty(difficulty string, routes maped.Routes) (err error) {
+	for pos, route := range routes {
 		if route.Difficulty != difficulty {
-			delete(routes, key)
+			routes.delete(pos)
 		}
 	}
 	return
 }
 
 func filterTypeRoad(road bool, mountain bool, path bool, routes []maped.Route) (err error) {
-	for key, route := range routes {
+	for pos, route := range routes {
 		switch {
 		case (route.Road != road) && (route.Mountain != mountain) && (route.Path != path):
-			delete(routes, key)
+			routes.delete(pos)
 		default:
 		}
 	}
@@ -56,10 +56,10 @@ func filterTypeRoad(road bool, mountain bool, path bool, routes []maped.Route) (
 }
 
 func filterDuration(durationString string, routes []maped.Route) (err error) {
-	duration, _ := strconv.Atoi(duration)
-	for key, route := range routes {
+	duration, _ := strconv.Atoi(durationString)
+	for pos, route := range routes {
 		if route.Duration < duration-1 || route.Duration > duration+1 {
-			delete(route, key)
+			routes.delete(pos)
 		}
 	}
 	return
@@ -91,6 +91,7 @@ func filterGarage(comparison string, garage string, routes []maped.Route) (err e
 
 }
 */
+
 func routeKey(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "Routes", "default_route", 0, nil)
 }
@@ -112,7 +113,7 @@ func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 		Comments:       []string{"Mola pila", "Habia gastroenteritis", "Rompi la rodilla", "No sabia que los paragüayos hablaban"},
 		Author:         "Menti",
 		Maps:           "mira como mola __-/^^^^^^^\\____",
-		Duration:       time.Now(),
+		Duration:       3,
 		Slope:          1200,
 		Photos:         "nah",
 		Score:          "over 9000",
