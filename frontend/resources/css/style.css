@@ -12,5 +12,82 @@
 .btn {
 	border:none;
 	border-radius:0;
-	background:#d3d3d3;
+}
+.btn-google {
+	background-color:#73A2EF;
+}
+
+.btn-google:hover,
+.btn-google:focus,
+.btn-google:active,
+.btn-google.active,
+.open > .dropdown-toggle.btn-google {
+	color: #fff;
+	background-color: #5c81bf;
+}
+
+.btn-facebook {
+	background-color:#3b5998;
+}
+.btn-facebook:hover,
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook.active,
+.open > .dropdown-toggle.btn-facebook {
+	color: #fff;
+	background-color: #2f4779;
+}
+
+.btn-twitter {
+	background-color:#55acee;
+}
+.btn-twitter:hover,
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter.active,
+.open > .dropdown-toggle.btn-twitter {
+	color: #fff;
+	background-color: #4489be;
+}
+
+.btn-linkedin {
+	background-color:#6c90c3;
+}
+.btn-linkedin:hover,
+.btn-linkedin:focus,
+.btn-linkedin:active,
+.btn-linkedin.active,
+.open > .dropdown-toggle.btn-linkedin {
+	color: #fff;
+	background-color: #56739c;
+}
+.btn-login.disabled,
+.btn-login[disabled],
+fieldset[disabled] .btn-login,
+.btn-login.disabled:hover,
+.btn-login[disabled]:hover,
+fieldset[disabled] .btn-login:hover,
+.btn-login.disabled:focus,
+.btn-login[disabled]:focus,
+fieldset[disabled] .btn-login:focus,
+.btn-login.disabled:active,
+.btn-login[disabled]:active,
+fieldset[disabled] .btn-login:active,
+.btn-login.disabled.active,
+.btn-login[disabled].active,
+fieldset[disabled] .btn-login.active {
+	background-color: #E86666;
+}
+
+.btn-login {
+	background-color:#95CC70;
+}
+
+.btn-login:hover,
+.btn-login:focus,
+.btn-login:active,
+.btn-login.active,
+.open > .dropdown-toggle.btn-login {
+	color: #fff;
+	background-color: #77a359;
 }

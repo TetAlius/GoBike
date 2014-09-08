@@ -35,9 +35,9 @@ func AvailableUserToRegister(context appengine.Context, username string, email s
 
 // RegisterUser register a new User in the datastore, if the operation
 // fails then ir will return a 'false'
-func RegisterUser(context appengine.Context, user maped.User) bool {
+func RegisterUser(context appengine.Context, user maped.User) (bool) {
 	context.Infof("Registering " + user.Username)
-	key := datastore.NewIncompleteKey(context, "Users", routeKey(context))
+	key := datastore.NewIncompleteKey(context, "Users", nil)
 	context.Infof("Getting the datastore key")
 	_, err := datastore.Put(context, key, &user)
 	if err != nil {
@@ -47,9 +47,20 @@ func RegisterUser(context appengine.Context, user maped.User) bool {
 	return true
 }
 
-func userKey(c appengine.Context) *datastore.Key {
-	return datastore.NewKey(c, "Users", "default_user", 0, nil)
-}
+// ActivateUser activates a user with the hashLink provided
+func ActivateUser(context appengine.Context, hashLink string) bool {
+	query := datastore.NewQuery("Users").
+		Filter("HashLink =", hashLink)
+	var users []maped.User
+	keys, err := query.GetAll(context, &users)
+	if err != nil {
+		context.Errorf("Could not recover the keys: %v", err)
+		return false
+	}
+	users[0].Active = true
+	datastore.Put(context,keys[0], &users[0])
+	return true
+	}
 
 /*
 PRIMERA VERSION DEL LOGIN

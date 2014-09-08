@@ -18,15 +18,44 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Log In <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="sign in">
-            <form class="navbar-form navbar-left" role="login" method="post" action="/login">
+          <ul class="dropdown-menu" role="sign in" style="padding: 15px;min-width: 250px;">
+            <li>
+               <div class="row">
+                  <div class="col-md-12">
+                     <form class="form" role="form" method="post" data-toggle="validator" action="login" accept-charset="UTF-8" id="login-nav">
+                        <div class="form-group">
+                          <label for="username">Username:</label>
+                          <input type="text" class="form-control" placeholder="Username" id="userName"name="username" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password:</label>
+                          <input type="password" class="form-control" placeholder="Password" id="password" name="password" required>
+                          <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group">
+                           <button type="submit" class="btn btn-success btn-block btn-login">Sign in</button>
+                        </div>
+                     </form>
+                     <a class="btn btn-primary btn-block" href="/register" id="sign-up">Sign up</a>
+                     <li class="divider"></li>
+                     <a class="btn btn-primary btn-block btn-google" href="/registerGoogle"><i class="fa fa-google"></i> Sign In with Google</a>
+                     <a class="btn btn-primary btn-block btn-facebook" href="/registerFacebook"><i class="fa fa-facebook"></i> Sign In with Facebook</a>
+                     <a class="btn btn-primary btn-block btn-twitter" href="/registerTwitter"><i class="fa fa-twitter"></i> Sign In with Twitter</a>
+                     <a class="btn btn-primary btn-block btn-linkedin" href="/registerLinkedin"><i class="fa fa-linkedin"></i> Sign In with Linkedin</a>
+                  </div>
+               </div>
+            </li>
+            <!--<form class="navbar-form navbar-left"  data-toggle="validator" role="login" method="post" action="/login">
             <div class="form-group">
                   <label for="username">Name:</label>
-                <input type="text" class="form-control" placeholder="Username" id="userName">
+                <input type="text" class="form-control" placeholder="Username" id="userName" required>
+                <div class="help-block with-errors"></div>
               </div>
               <div class="form-group">
                 <label for="password">Password:</label>
-                    <input type="password" class="form-control" placeholder="Password" id="password">
+                    <input type="password" class="form-control" placeholder="Password" id="password" required>
+                    <div class="help-block with-errors"></div>
               </div>
               <div class="divider"></div>
               <a class="btn btn-default" href="/register">Sign Up</a>
@@ -36,40 +65,11 @@
             <a class="btn btn-default" href="/registerGoogle"><i class="fa fa-google-plus"></i></a>
             <a class="btn btn-default" href="/registerTwitter"><i class="fa fa-twitter"></i></a>
             <a class="btn btn-default" href="/registerLinkedin"><i class="fa fa-linkedin"></i></a>
-
-            <div class="center-block">
-          </div>
-          </form>
+          </form> -->
           </ul>
         </li>
        </ul>
   </div><!-- /.container-fluid -->
 </div>
 </div>
-{{end}}
-
-{{define "loginscript"}}
-<script type="text/javascript">
-      (function() {
-       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-       po.src = 'https://apis.google.com/js/client:plusone.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-     })();
-
-    function signinCallback(authResult) {
-  if (authResult['status']['signed_in']) {
-    // Update the app to reflect a signed in user
-    // Hide the sign-in button now that the user is authorized, for example:
-    document.getElementById('signinButton').setAttribute('style', 'display: none');
-  } else {
-    // Update the app to reflect a signed out user
-    // Possible error values:
-    //   "user_signed_out" - User is signed-out
-    //   "access_denied" - User denied access to your app
-    //   "immediate_failed" - Could not automatically log in the user
-    console.log('Sign-in state: ' + authResult['error']);
-  }
-}
-</script>
-
 {{end}}

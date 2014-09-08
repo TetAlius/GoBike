@@ -2,11 +2,13 @@ package frontend
 
 import (
 	"encoding/hex"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 
 	"appengine"
+	"appengine/mail"
 
 	"strconv"
 
@@ -42,10 +44,40 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		registerResult := backend.RegisterUser(c, user)
 		if registerResult {
 			http.Redirect(w, r, "/", http.StatusFound)
+			sendActivationMail(c, r.FormValue("Email"), hashlink)
 		} else {
 			http.Redirect(w, r, "/register", http.StatusFound)
 		}
 	} else {
 		http.Redirect(w, r, "/register", http.StatusFound)
+	}
+}
+
+func sendActivationMail(context appengine.Context, userMail string, hashlink string) {
+	msg := &mail.Message{
+		Sender:  "Support <noreply-gobycicle@gobycicle.appspotmail.com>",
+		To:      []string{userMail},
+		Subject: "Activate your account on GoBike ",
+		Body:    fmt.Sprintf(activationMessage, createConfirmationURL(hashlink)),
+	}
+	if err := mail.Send(context, msg); err != nil {
+		context.Errorf("Couldn't send email: %v", err)
+	}
+}
+
+var activationMessage = "Este mensaje ha sido autogenerado :) \n para activar tu cuenta haga click en el siguiente enlace o bien copielo y pequelo en el navegador :D "
+
+func createConfirmationURL(hashLink string) string {
+	return "http://http://gobycicle.appspot.com/activateUser?hashlink=" + hashLink
+}
+
+//TODO redirects
+func activateUser(w http.ResponseWriter, r *http.Request) {
+	context := appengine.NewContext(r)
+	hashlink := r.FormValue("hashlink")
+	if result := backend.ActivateUser(context, hashlink); result {
+		http.Redirect(w, r, "/", http.StatusFound)
+	} else {
+		http.Redirect(w, r, "/", http.StatusFound)
 	}
 }
