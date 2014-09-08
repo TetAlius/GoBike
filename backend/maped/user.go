@@ -6,16 +6,16 @@ import (
 	"appengine/datastore"
 )
 
-// User the users
+// User the user model
 type User struct {
-	Username    string    // the user name
-	Since       time.Time // the day when the account was created
-	AlreadyDone []datastore.Key
-	Email       string
-	Name        string
-	Surname     string
-	BirthDate   string
-	Password    string
-	Active      bool
-	HashLink    string
+	Username    string          // The user name
+	Since       time.Time       // The day when the account was created
+	AlreadyDone []datastore.Key // Already done routes by the user
+	Email       string          // The user email
+	Name        string          // The name
+	Surname     string          // the surname
+	BirthDate   string          // Happy birthday!
+	Password    string          // It's a secret!
+	Active      bool            // Is the account active?
+	HashLink    string          //For activating purposes
 }
