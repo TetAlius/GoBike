@@ -9,20 +9,23 @@ type Route struct {
 	Title          string
 	Description    string
 	CreationDate   time.Time
-	Distance       float64
+	Distance       float64 // filter
 	BeginLoc       string
 	EndLoc         string
-	Difficulty     string
-	Road           bool
-	Mountain       bool
-	Path           bool
+	Difficulty     string // filter
+	Road           bool   // filter
+	Mountain       bool   // filter
+	Path           bool   // filter
 	Comments       []string
 	Author         string
 	Maps           string
-	Duration       time.Time
-	Slope          float64
+	Duration       int     // filter
+	Slope          float64 // filter
+	TotalAscent    float64 // filter
 	Photos         string
-	Score          string
-	Signal         bool
-	BeginTransport bool
+	Score          string // filter
+	Signal         bool   // filer
+	BeginTransport bool   // filter
+	Garage         bool   // filter
+
 }

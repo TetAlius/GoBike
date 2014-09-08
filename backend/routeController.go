@@ -2,10 +2,10 @@ package backend
 
 import (
 	"errors"
-	"net/http"
-	"time"
-
 	"github.com/TetAlius/GoBike/backend/maped"
+	"net/http"
+	"strconv"
+	"time"
 
 	"appengine"
 	"appengine/datastore"
@@ -20,13 +20,82 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 		context.Errorf("Can´t load the routes: %e", err)
 		err = errors.New("Can't load the routes")
 	}
+
 	return
 }
 
+func filterDistance(distanceMin string, distanceMax string, routes []maped.Route) (err error) {
+	min, _ := strconv.ParseFloat(distanceMin, 64)
+	max, _ := strconv.ParseFloat(distanceMax, 64)
+	for key, route := range routes {
+		if route.Distance < min && route.Distance > max {
+			delete(routes, key)
+		}
+	}
+	return
+}
+
+func filterDifficulty(difficulty string, routes []maped.Route) (err error) {
+	for key, route := range routes {
+		if route.Difficulty != difficulty {
+			delete(routes, key)
+		}
+	}
+	return
+}
+
+func filterTypeRoad(road bool, mountain bool, path bool, routes []maped.Route) (err error) {
+	for key, route := range routes {
+		switch {
+		case (route.Road != road) && (route.Mountain != mountain) && (route.Path != path):
+			delete(routes, key)
+		default:
+		}
+	}
+	return
+}
+
+func filterDuration(durationString string, routes []maped.Route) (err error) {
+	duration, _ := strconv.Atoi(duration)
+	for key, route := range routes {
+		if route.Duration < duration-1 || route.Duration > duration+1 {
+			delete(route, key)
+		}
+	}
+	return
+
+}
+
+/*
+func filterSlope(comparison string, slope string, routes []maped.Route) (err error) {
+
+}
+
+func filterTotalAscent(comparison string, totalAscent string, routes []maped.Route) (err error) {
+
+}
+
+func filterScore(comparison string, score string, routes []maped.Route) (err error) {
+
+}
+
+func filterSignal(comparison string, signal string, routes []maped.Route) (err error) {
+
+}
+
+func filterBeginTransport(comparison string, beginTransport string, routes []maped.Route) (err error) {
+
+}
+
+func filterGarage(comparison string, garage string, routes []maped.Route) (err error) {
+
+}
+*/
 func routeKey(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "Routes", "default_route", 0, nil)
 }
 
+// InsertRoutesHandler the routes handler
 func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	g := maped.Route{
