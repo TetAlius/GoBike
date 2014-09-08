@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"net/smtp"
 
 	"appengine"
 
@@ -42,10 +43,27 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		registerResult := backend.RegisterUser(c, user)
 		if registerResult {
 			http.Redirect(w, r, "/", http.StatusFound)
+			sendActivationMail(c, r.FormValue("Email"));
 		} else {
 			http.Redirect(w, r, "/register", http.StatusFound)
 		}
 	} else {
 		http.Redirect(w, r, "/register", http.StatusFound)
 	}
+}
+
+func sendActivationMail(context appengine.Context, userEmail string){
+	msg := &mail.Message{
+		Sender: "Support <no-reply@GoBike.com>",
+		To: userMail,
+		Subject: "Activate your account on GoBike ",
+		Body: fmt.Sprintf("Test ", createConfirmationURL()),
+	}
+	if err := mail.Send(context, msg); err != nil {
+		context.Errorf("Couldn't send email: %v", err)
+	}
+}
+
+func createConfirmationURL() (string, error){
+	return "This is a test ";
 }
