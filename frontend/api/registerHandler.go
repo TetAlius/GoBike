@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"net/smtp"
 
 	"appengine"
 	"appengine/mail"
@@ -44,7 +45,11 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		registerResult := backend.RegisterUser(c, user)
 		if registerResult {
 			http.Redirect(w, r, "/", http.StatusFound)
+<<<<<<< HEAD
 			sendActivationMail(c, r.FormValue("Email"), hashlink)
+=======
+			sendActivationMail(c, r.FormValue("Email"));
+>>>>>>> 1c1e1119fbff8464fcf744521e849c3ad67cd591
 		} else {
 			http.Redirect(w, r, "/register", http.StatusFound)
 		}
@@ -53,18 +58,28 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+<<<<<<< HEAD
 func sendActivationMail(context appengine.Context, userMail string, hashlink string) {
 	msg := &mail.Message{
 		Sender:  "Support <noreply-gobycicle@gobycicle.appspotmail.com>",
 		To:      []string{userMail},
 		Subject: "Activate your account on GoBike ",
 		Body:    fmt.Sprintf(activationMessage, createConfirmationURL(hashlink)),
+=======
+func sendActivationMail(context appengine.Context, userEmail string){
+	msg := &mail.Message{
+		Sender: "Support <no-reply@GoBike.com>",
+		To: userMail,
+		Subject: "Activate your account on GoBike ",
+		Body: fmt.Sprintf("Test ", createConfirmationURL()),
+>>>>>>> 1c1e1119fbff8464fcf744521e849c3ad67cd591
 	}
 	if err := mail.Send(context, msg); err != nil {
 		context.Errorf("Couldn't send email: %v", err)
 	}
 }
 
+<<<<<<< HEAD
 var activationMessage = "Este mensaje ha sido autogenerado :) \n para activar tu cuenta haga click en el siguiente enlace o bien copielo y pequelo en el navegador :D "
 
 func createConfirmationURL(hashLink string) string {
@@ -81,3 +96,8 @@ func activateUser(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusFound)
 	}
 }
+=======
+func createConfirmationURL() (string, error){
+	return "This is a test ";
+}
+>>>>>>> 1c1e1119fbff8464fcf744521e849c3ad67cd591
