@@ -49,11 +49,6 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 
 			sendActivationMail(c, r.FormValue("Email"), hashlink)
 
-<<<<<<< HEAD
-			//sendActivationMail(c, r.FormValue("Email"))
-
-=======
->>>>>>> FETCH_HEAD
 		} else {
 			http.Redirect(w, r, "/register", http.StatusFound)
 		}
@@ -64,19 +59,15 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func sendActivationMail(context appengine.Context, userMail string, hashlink string) {
 	// workarround
-	_ = &mail.Message{
+	msg := &mail.Message{
 		Sender:  "Support <noreply-gobycicle@gobycicle.appspotmail.com>",
 		To:      []string{userMail},
 		Subject: "Activate your account on GoBike ",
 		Body:    fmt.Sprintf(activationMessage, createConfirmationURL(hashlink)),
 	}
-<<<<<<< HEAD
-
-=======
 	if err := mail.Send(context, msg); err != nil {
 		context.Errorf("Couldn't send email: %v", err)
 	}
->>>>>>> FETCH_HEAD
 }
 
 var activationMessage = "Este mensaje ha sido autogenerado :) \n para activar tu cuenta haga click en el siguiente enlace o bien copielo y pequelo en el navegador :D "
