@@ -36,7 +36,7 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		user.Username = r.FormValue("Username")
 		user.Email = r.FormValue("Email")
 		user.Active = false
-		user.Password = hex.EncodeToString([]byte(base64.StdEncoding.EncodeToString([]byte(r.FormValue("password")))))
+		user.Password = hex.EncodeToString([]byte(base64.StdEncoding.EncodeToString([]byte(r.FormValue("Password")))))
 		//Create and insert the hash for the user
 		byteHash := []byte(user.Username + user.Email + user.Username + user.Email)
 		hashlink := hex.EncodeToString(byteHash)

@@ -1,6 +1,7 @@
 package maped
 
 import (
+	"appengine"
 	"time"
 )
 
@@ -31,7 +32,7 @@ type Route struct {
 }
 
 // Routes the routes
-type Routes []*Route
+type Routes []Route
 
 // SliceHandler the routes interface
 type SliceHandler interface {
@@ -39,8 +40,9 @@ type SliceHandler interface {
 }
 
 // Delete a given route in a routes slice
-func (routes Routes) Delete(pos int) (err error) {
+func (routes Routes) Delete(context appengine.Context, pos int) (err error) {
 	//routes := r
+	context.Infof("¡Llegué!")
 	routes[pos] = routes[len(routes)-1]
 	routes = routes[:len(routes)-1]
 

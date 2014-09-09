@@ -21,46 +21,50 @@ func GetAllRoutes(context appengine.Context) (routes maped.Routes, err error) {
 		err = errors.New("Can't load the routes")
 	}
 
-	err = filterDistance("40", "60", routes)
+	err = filterDistance(context, "40", "50", routes)
 	return
 }
 
-func filterDistance(distanceMin string, distanceMax string, routes maped.Routes) (err error) {
+func filterDistance(context appengine.Context, distanceMin string, distanceMax string, routes maped.Routes) (err error) {
 	min, _ := strconv.ParseFloat(distanceMin, 64)
+	context.Infof("min: %s", min)
 	max, _ := strconv.ParseFloat(distanceMax, 64)
+	context.Infof("max: %s", max)
+	context.Infof("routes: %s", routes)
 	for pos, route := range routes {
+		context.Infof("pos: %s, route: %s", pos, routes)
 		if route.Distance < min && route.Distance > max {
-			routes.Delete(pos)
+			routes.Delete(context, pos)
 		}
 	}
 	return
 }
 
-func filterDifficulty(difficulty string, routes maped.Routes) (err error) {
+func filterDifficulty(context appengine.Context, difficulty string, routes maped.Routes) (err error) {
 	for pos, route := range routes {
 		if route.Difficulty != difficulty {
-			routes.Delete(pos)
+			routes.Delete(context, pos)
 		}
 	}
 	return
 }
 
-func filterTypeRoad(road bool, mountain bool, path bool, routes maped.Routes) (err error) {
+func filterTypeRoad(context appengine.Context, road bool, mountain bool, path bool, routes maped.Routes) (err error) {
 	for pos, route := range routes {
 		switch {
 		case (route.Road != road) && (route.Mountain != mountain) && (route.Path != path):
-			routes.Delete(pos)
+			routes.Delete(context, pos)
 		default:
 		}
 	}
 	return
 }
 
-func filterDuration(durationString string, routes maped.Routes) (err error) {
+func filterDuration(context appengine.Context, durationString string, routes maped.Routes) (err error) {
 	duration, _ := strconv.Atoi(durationString)
 	for pos, route := range routes {
 		if route.Duration < duration-1 || route.Duration > duration+1 {
-			routes.Delete(pos)
+			routes.Delete(context, pos)
 		}
 	}
 	return
