@@ -7,7 +7,7 @@ import (
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 
-	coso := r.FormValue("id")
-
-	fmt.Fprintf(w, coso)
+	//username := r.FormValue("username")
+	//password := r.FormValue("password")
+	fmt.Fprintf(w, "")
 }

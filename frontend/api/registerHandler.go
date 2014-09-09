@@ -1,15 +1,15 @@
 package frontend
 
 import (
-	"encoding/hex"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
-	//"net/smtp"
 
 	"appengine"
 	"appengine/mail"
+	"encoding/base64"
+	"encoding/hex"
 
 	"strconv"
 
@@ -36,6 +36,7 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 		user.Username = r.FormValue("Username")
 		user.Email = r.FormValue("Email")
 		user.Active = false
+		user.Password = hex.EncodeToString([]byte(base64.StdEncoding.EncodeToString([]byte(r.FormValue("password")))))
 		//Create and insert the hash for the user
 		byteHash := []byte(user.Username + user.Email + user.Username + user.Email)
 		hashlink := hex.EncodeToString(byteHash)
@@ -48,8 +49,11 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 
 			sendActivationMail(c, r.FormValue("Email"), hashlink)
 
+<<<<<<< HEAD
 			//sendActivationMail(c, r.FormValue("Email"))
 
+=======
+>>>>>>> FETCH_HEAD
 		} else {
 			http.Redirect(w, r, "/register", http.StatusFound)
 		}
@@ -66,7 +70,13 @@ func sendActivationMail(context appengine.Context, userMail string, hashlink str
 		Subject: "Activate your account on GoBike ",
 		Body:    fmt.Sprintf(activationMessage, createConfirmationURL(hashlink)),
 	}
+<<<<<<< HEAD
 
+=======
+	if err := mail.Send(context, msg); err != nil {
+		context.Errorf("Couldn't send email: %v", err)
+	}
+>>>>>>> FETCH_HEAD
 }
 
 var activationMessage = "Este mensaje ha sido autogenerado :) \n para activar tu cuenta haga click en el siguiente enlace o bien copielo y pequelo en el navegador :D "
