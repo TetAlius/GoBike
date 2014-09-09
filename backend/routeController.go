@@ -24,12 +24,12 @@ func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
 	return
 }
 
-func filterDistance(distanceMin string, distanceMax string, routes []maped.Route) (err error) {
+func filterDistance(distanceMin string, distanceMax string, routes maped.Routes) (err error) {
 	min, _ := strconv.ParseFloat(distanceMin, 64)
 	max, _ := strconv.ParseFloat(distanceMax, 64)
 	for pos, route := range routes {
 		if route.Distance < min && route.Distance > max {
-			routes.delete(pos)
+			routes.Delete(pos)
 		}
 	}
 	return
@@ -38,28 +38,28 @@ func filterDistance(distanceMin string, distanceMax string, routes []maped.Route
 func filterDifficulty(difficulty string, routes maped.Routes) (err error) {
 	for pos, route := range routes {
 		if route.Difficulty != difficulty {
-			routes.delete(pos)
+			routes.Delete(pos)
 		}
 	}
 	return
 }
 
-func filterTypeRoad(road bool, mountain bool, path bool, routes []maped.Route) (err error) {
+func filterTypeRoad(road bool, mountain bool, path bool, routes maped.Routes) (err error) {
 	for pos, route := range routes {
 		switch {
 		case (route.Road != road) && (route.Mountain != mountain) && (route.Path != path):
-			routes.delete(pos)
+			routes.Delete(pos)
 		default:
 		}
 	}
 	return
 }
 
-func filterDuration(durationString string, routes []maped.Route) (err error) {
+func filterDuration(durationString string, routes maped.Routes) (err error) {
 	duration, _ := strconv.Atoi(durationString)
 	for pos, route := range routes {
 		if route.Duration < duration-1 || route.Duration > duration+1 {
-			routes.delete(pos)
+			routes.Delete(pos)
 		}
 	}
 	return

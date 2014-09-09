@@ -33,8 +33,13 @@ type Route struct {
 // Routes the routes
 type Routes []*Route
 
+// SliceHandler the routes interface
+type SliceHandler interface {
+	Delete() error
+}
+
 // Delete a given route in a routes slice
-func (r Routes) Delete(pos int) (err error) {
+func (routes Routes) Delete(pos int) (err error) {
 	//routes := r
 	routes[pos] = routes[len(routes)-1]
 	routes = routes[:len(routes)-1]
