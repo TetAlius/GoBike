@@ -48,7 +48,7 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 
 			sendActivationMail(c, r.FormValue("Email"), hashlink)
 
-			sendActivationMail(c, r.FormValue("Email"))
+			//sendActivationMail(c, r.FormValue("Email"))
 
 		} else {
 			http.Redirect(w, r, "/register", http.StatusFound)
@@ -59,12 +59,14 @@ func registerPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendActivationMail(context appengine.Context, userMail string, hashlink string) {
-	msg := &mail.Message{
+	// workarround
+	_ = &mail.Message{
 		Sender:  "Support <noreply-gobycicle@gobycicle.appspotmail.com>",
 		To:      []string{userMail},
 		Subject: "Activate your account on GoBike ",
 		Body:    fmt.Sprintf(activationMessage, createConfirmationURL(hashlink)),
 	}
+
 }
 
 var activationMessage = "Este mensaje ha sido autogenerado :) \n para activar tu cuenta haga click en el siguiente enlace o bien copielo y pequelo en el navegador :D "
@@ -82,8 +84,4 @@ func activateUser(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Redirect(w, r, "/", http.StatusFound)
 	}
-}
-
-func createConfirmationURL() (string, error) {
-	return "This is a test "
 }

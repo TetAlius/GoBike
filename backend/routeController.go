@@ -1,26 +1,27 @@
 package backend
 
 import (
+	"appengine"
+	"appengine/datastore"
 	"errors"
 	"github.com/TetAlius/GoBike/backend/maped"
 	"net/http"
 	"strconv"
 	"time"
-
-	"appengine"
-	"appengine/datastore"
 )
 
 //GetAllRoutes Returns all the routes in the DB
-func GetAllRoutes(context appengine.Context) (routes []maped.Route, err error) {
+func GetAllRoutes(context appengine.Context) (routes maped.Routes, err error) {
 	query := datastore.NewQuery("Routes").Ancestor(routeKey(context))
-	routes = make([]maped.Route, 0, 10)
+	//routes = make([]maped.Routes, 0, 10)
+	//routes = maped.Routes
 	_, err = query.GetAll(context, &routes)
 	if err != nil {
 		context.Errorf("Can´t load the routes: %s", err)
 		err = errors.New("Can't load the routes")
 	}
 
+	err = filterDistance("40", "60", routes)
 	return
 }
 
