@@ -67,18 +67,6 @@ func sendActivationMail(context appengine.Context, userMail string, hashlink str
 	}
 }
 
-func sendActivationMail(context appengine.Context, userEmail string) {
-	msg := &mail.Message{
-		Sender:  "Support <no-reply@GoBike.com>",
-		To:      userMail,
-		Subject: "Activate your account on GoBike ",
-		Body:    fmt.Sprintf("Test ", createConfirmationURL()),
-	}
-	if err := mail.Send(context, msg); err != nil {
-		context.Errorf("Couldn't send email: %v", err)
-	}
-}
-
 var activationMessage = "Este mensaje ha sido autogenerado :) \n para activar tu cuenta haga click en el siguiente enlace o bien copielo y pequelo en el navegador :D "
 
 func createConfirmationURL(hashLink string) string {
