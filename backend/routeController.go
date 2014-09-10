@@ -15,26 +15,34 @@ func GetAllRoutes(context appengine.Context) (routes maped.Routes, err error) {
 	query := datastore.NewQuery("Routes").Ancestor(routeKey(context))
 	//routes = make([]maped.Routes, 0, 10)
 	//routes = maped.Routes
-	_, err = query.GetAll(context, &routes)
+
+	var routesTMP []maped.Route
+	_, err = query.GetAll(context, &routesTMP)
 	if err != nil {
 		context.Errorf("Can´t load the routes: %s", err)
 		err = errors.New("Can't load the routes")
 	}
 
-	err = filterDistance(context, "40", "50", routes)
+	routes = make(map[int]maped.Route)
+	for pos, routeTMP := range routesTMP {
+		routes[pos] = routeTMP
+	}
+
+	err = filterDistance(context, "40", "600", routes)
 	return
 }
 
 func filterDistance(context appengine.Context, distanceMin string, distanceMax string, routes maped.Routes) (err error) {
+	context.Infof("filterDistance start")
 	min, _ := strconv.ParseFloat(distanceMin, 64)
 	max, _ := strconv.ParseFloat(distanceMax, 64)
-	//context.Infof("routes: %s", routes)
+
 	for pos, route := range routes {
-		//context.Infof("pos: %s, route: %s", pos, routes)
-		//context.Infof("min -> %s < %s", route.Distance, min)
-		//context.Infof("max -> %s > %s", route.Distance, max)
+		context.Infof("pos: %s, route: %s", pos, routes)
 		if route.Distance < min || route.Distance > max {
-			routes.Delete(context, pos)
+			context.Infof("min -> %s < %s", route.Distance, min)
+			context.Infof("max -> %s > %s", route.Distance, max)
+			delete(routes, pos)
 		}
 	}
 	return
@@ -43,7 +51,7 @@ func filterDistance(context appengine.Context, distanceMin string, distanceMax s
 func filterDifficulty(context appengine.Context, difficulty string, routes maped.Routes) (err error) {
 	for pos, route := range routes {
 		if route.Difficulty != difficulty {
-			routes.Delete(context, pos)
+			delete(routes, pos)
 		}
 	}
 	return
@@ -53,23 +61,24 @@ func filterTypeRoad(context appengine.Context, road bool, mountain bool, path bo
 	for pos, route := range routes {
 		switch {
 		case (route.Road != road) && (route.Mountain != mountain) && (route.Path != path):
-			routes.Delete(context, pos)
+			delete(routes, pos)
 		default:
 		}
 	}
 	return
 }
 
+/* uncomment when Duration is a int
 func filterDuration(context appengine.Context, durationString string, routes maped.Routes) (err error) {
 	duration, _ := strconv.Atoi(durationString)
 	for pos, route := range routes {
 		if route.Duration < duration-1 || route.Duration > duration+1 {
-			routes.Delete(context, pos)
+			delete(routes, pos)
 		}
 	}
 	return
 
-}
+}*/
 
 /*
 func filterSlope(comparison string, slope string, routes []maped.Route) (err error) {
@@ -118,7 +127,7 @@ func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 		Comments:       []string{"Mola pila", "Habia gastroenteritis", "Rompi la rodilla", "No sabia que los paragüayos hablaban"},
 		Author:         "Menti",
 		Maps:           "mira como mola __-/^^^^^^^\\____",
-		Duration:       3,
+		Duration:       time.Now(), //change this to 3 or another int
 		Slope:          1200,
 		Photos:         "nah",
 		Score:          "over 9000",

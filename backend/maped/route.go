@@ -1,7 +1,6 @@
 package maped
 
 import (
-	"appengine"
 	"time"
 )
 
@@ -20,9 +19,9 @@ type Route struct {
 	Comments       []string
 	Author         string
 	Maps           string
-	Duration       int     // filter
-	Slope          float64 // filter
-	TotalAscent    float64 // filter
+	Duration       time.Time // filter //must be int, just a workarround
+	Slope          float64   // filter
+	TotalAscent    float64   // filter
 	Photos         string
 	Score          string // filter
 	Signal         bool   // filer
@@ -32,8 +31,9 @@ type Route struct {
 }
 
 // Routes the routes
-type Routes []Route
+type Routes map[int]Route
 
+/*
 // SliceHandler the routes interface
 type SliceHandler interface {
 	Delete() error
@@ -46,4 +46,4 @@ func (routes Routes) Delete(context appengine.Context, pos int) (err error) {
 	//routes = routes[:len(routes)-1]
 	context.Infof("routes[%s] -> %s", pos, routes[pos])
 	return
-}
+}*/
