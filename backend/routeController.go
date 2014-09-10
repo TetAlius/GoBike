@@ -27,13 +27,13 @@ func GetAllRoutes(context appengine.Context) (routes maped.Routes, err error) {
 
 func filterDistance(context appengine.Context, distanceMin string, distanceMax string, routes maped.Routes) (err error) {
 	min, _ := strconv.ParseFloat(distanceMin, 64)
-	context.Infof("min: %s", min)
 	max, _ := strconv.ParseFloat(distanceMax, 64)
-	context.Infof("max: %s", max)
-	context.Infof("routes: %s", routes)
+	//context.Infof("routes: %s", routes)
 	for pos, route := range routes {
-		context.Infof("pos: %s, route: %s", pos, routes)
-		if route.Distance < min && route.Distance > max {
+		//context.Infof("pos: %s, route: %s", pos, routes)
+		//context.Infof("min -> %s < %s", route.Distance, min)
+		//context.Infof("max -> %s > %s", route.Distance, max)
+		if route.Distance < min || route.Distance > max {
 			routes.Delete(context, pos)
 		}
 	}
