@@ -41,10 +41,9 @@ type SliceHandler interface {
 
 // Delete a given route in a routes slice
 func (routes Routes) Delete(context appengine.Context, pos int) (err error) {
-	//routes := r
-	context.Infof("¡Llegué!")
-	routes[pos] = routes[len(routes)-1]
-	routes = routes[:len(routes)-1]
-
+	// TODO
+	//routes[pos] = routes[len(routes)-1]
+	//routes = routes[:len(routes)-1]
+	context.Infof("routes[%s] -> %s", pos, routes[pos])
 	return
 }
