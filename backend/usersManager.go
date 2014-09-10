@@ -62,11 +62,7 @@ func ActivateUser(context appengine.Context, hashLink string) bool {
 	return true
 }
 
-/*
-PRIMERA VERSION DEL LOGIN
-FUENTE: http://www.mschoebel.info/2014/03/09/snippet-golang-webapp-login-logout.html
-
-
+//FUENTE: http://www.mschoebel.info/2014/03/09/snippet-golang-webapp-login-logout.html
 
 
 func login(response http.ResponseWriter, request *http.Request) {
@@ -79,14 +75,13 @@ func login(response http.ResponseWriter, request *http.Request) {
 	}
 }
 
-func checkCredentials(name, password string) bool {
-	c := appengine.NewContext(r)
-	q := datastore.NewQuery("User").
-		Filter("Name =", name).
-		Filter("Password =", password)
+//CheckCredentials checks if the username and the password given are correct
+func CheckCredentials(context appengine.Context,name string, password string) bool {
+	q := datastore.NewQuery("Users").
+		Filter("Username =", name).
 
 	var user []User
-	usr, err := q.GetAll(c, &user)
+	keys, err := q.GetAll(c, &user)
 
 	if err != nil {
 		context.Errorf("Can't find user: %e", err)
@@ -94,8 +89,9 @@ func checkCredentials(name, password string) bool {
 		return false
 	}
 
-	if usr != nil {
-		return true
+	if user[0] != nil {
+		if user[0].Password == password
+			return true
 	}
 	return false
 

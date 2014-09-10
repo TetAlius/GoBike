@@ -15,7 +15,7 @@ type User struct {
 	Name        string          // The name
 	Surname     string          // the surname
 	BirthDate   string          // Happy birthday!
-	Password    string          // It's a secret!
+	Password    string          // It's a secret! Stored as hex(base64(Password))
 	Active      bool            // Is the account active?
 	HashLink    string          //For activating purposes
 }
