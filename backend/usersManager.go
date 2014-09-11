@@ -1,10 +1,11 @@
 package backend
 
 import (
-	"github.com/TetAlius/GoBike/backend/maped"
-
 	"appengine"
 	"appengine/datastore"
+	"github.com/TetAlius/GoBike/backend/maped"
+	"net/http"
+	"time"
 )
 
 func registerUser(user maped.User) {
@@ -63,33 +64,30 @@ func ActivateUser(context appengine.Context, hashLink string) bool {
 }
 
 //FUENTE: http://www.mschoebel.info/2014/03/09/snippet-golang-webapp-login-logout.html
-/*
-func login(response http.ResponseWriter, request *http.Request) {
-	name := request.FormValue("name")
-	pass := request.FormValue("password")
-	if checkCredentials(name, pass) {
-		setSession(name, response)
-		redirectTarget := "/"
-		http.Redirect(response, request, redirectTarget, 302)
+
+//Login tries to login and store the session of an user
+func Login(context appengine.Context, response http.ResponseWriter, username string, password string) bool {
+	if checkCredentials(context, username, password) {
+		setSession(username, response)
+		return true
+	} else {
+		return false
 	}
 }
 
-//CheckCredentials checks if the username and the password given are correct
-func CheckCredentials(context appengine.Context, name string, password string) bool {
+func checkCredentials(context appengine.Context, name string, password string) bool {
 	q := datastore.NewQuery("Users").
 		Filter("Username =", name)
 
 	var user []maped.User
-	keys, err := q.GetAll(c, &user)
+	_, err := q.GetAll(context, &user)
 
 	if err != nil {
-		context.Errorf("Can't find user: %e", err)
-		err = errors.New("Can't find user")
 		return false
 	}
 
-	if user[0] != nil {
-		if user[0].Password == password {
+	if len(user) == 1 {
+		if user[0].Password == password && user[0].Active {
 			return true
 		}
 	}
@@ -97,23 +95,21 @@ func CheckCredentials(context appengine.Context, name string, password string) b
 
 }
 
-func logout() {
-	clearSession(response)
-	http.Redirect(response, request, "/", 302)
-}
+func setSession(username string, response http.ResponseWriter) {
+	expire := time.Now().AddDate(0, 0, 1)
+	cookie := http.Cookie{
+		Name:       "session",
+		Value:      username,
+		Path:       "/",
+		Domain:     "http://gobycicle.appspot.com/",
+		Expires:    expire,
+		RawExpires: expire.Format(time.UnixDate),
+		MaxAge:     86400,
+		Secure:     true,
+		HttpOnly:   true,
+	}
 
-func setSession(userName string, response http.ResponseWriter) {
-	value := map[string]string{
-		"name": userName,
-	}
-	if encoded, err := cookieHandler.Encode("session", value); err == nil {
-		cookie := &http.Cookie{
-			Name:  "session",
-			Value: encoded,
-			Path:  "/",
-		}
-		http.SetCookie(response, cookie)
-	}
+	http.SetCookie(response, &cookie)
 }
 
 func clearSession(response http.ResponseWriter) {
@@ -125,4 +121,3 @@ func clearSession(response http.ResponseWriter) {
 	}
 	http.SetCookie(response, cookie)
 }
-*/
