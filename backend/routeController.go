@@ -29,8 +29,12 @@ func GetAllRoutes(context appengine.Context) (routes maped.Routes, err error) {
 	}
 
 	err = filterDistance(context, "40", "600", routes)
-	//	err = filterSlope(context, "-15", "80", routes)
-	//	err = filterTotalAscent(context, "200", routes)
+	err = filterSlope(context, "-15", "80", routes)
+	err = filterTotalAscent(context, "200", routes)
+	err = filterScore(context, "4", routes)
+	err = filterSignal(context, true, routes)
+	err = filterGarage(context, false, routes)
+	err = filterBeginTransport(context, true, routes)
 	return
 }
 
@@ -82,26 +86,31 @@ func filterDuration(context appengine.Context, durationString string, routes map
 
 }*/
 
-/*
 func filterSlope(context appengine.Context, slopeMin string, slopeMax string, routes maped.Routes) (err error) {
 	context.Infof("filterSlope start")
-	min := getMinSlope(slopeMin)
-	max, _ := strconv.ParseFloat(slopeMax, 64)
-	for pos, route := range routes {
-		context.Infof("pos: %s, route: %s", pos, routes)
-		if route.Slope < min || route.Slope > max {
-			context.Infof("min -> %s < %s", route.Slope, min)
-			context.Infof("max -> %s > %s", route.Slope, max)
-			delete(routes, pos)
+	if len(slopeMin) > 0 {
+		min, _ := strconv.ParseFloat(slopeMin, 64)
+		max, _ := strconv.ParseFloat(slopeMax, 64)
+		for pos, route := range routes {
+			context.Infof("pos: %s, route: %s", pos, routes)
+			if route.Slope < min || route.Slope > max {
+				context.Infof("min -> %s < %s", route.Slope, min)
+				context.Infof("max -> %s > %s", route.Slope, max)
+				delete(routes, pos)
+			}
 		}
-	}
-	return
-}
+	} else {
+		min, _ := strconv.ParseFloat("0", 64)
+		max, _ := strconv.ParseFloat(slopeMax, 64)
+		for pos, route := range routes {
+			context.Infof("pos: %s, route: %s", pos, routes)
+			if route.Slope < min || route.Slope > max {
+				context.Infof("min -> %s < %s", route.Slope, min)
+				context.Infof("max -> %s > %s", route.Slope, max)
+				delete(routes, pos)
+			}
+		}
 
-func getMinSlope(slopeMin string) (slope float64) {
-	slope, _ := strconv.ParseFloat("0", 64)
-	if slopeMin != "" {
-		slope = strconv.ParseFloat(slopeMin, 64)
 	}
 	return
 }
@@ -119,23 +128,46 @@ func filterTotalAscent(context appengine.Context, maxAscent string, routes maped
 	return
 }
 
-
-func filterScore(comparison string, score string, routes []maped.Route) (err error) {
-
+func filterScore(context appengine.Context, score string, routes maped.Routes) (err error) {
+	context.Infof("filterScore start")
+	for pos, route := range routes {
+		context.Infof("score: %s", score)
+		if route.Score == score {
+			delete(routes, pos)
+		}
+	}
+	return
 }
 
-func filterSignal(comparison string, signal string, routes []maped.Route) (err error) {
-
+func filterSignal(context appengine.Context, signal bool, routes maped.Routes) (err error) {
+	context.Infof("filterSignal start")
+	for pos, route := range routes {
+		context.Infof("signal: %s", signal)
+		if route.Signal == signal {
+			delete(routes, pos)
+		}
+	}
+	return
 }
 
-func filterBeginTransport(comparison string, beginTransport string, routes []maped.Route) (err error) {
-
+func filterBeginTransport(context appengine.Context, isTransport bool, routes maped.Routes) (err error) {
+	context.Infof("filterBeginTransport start")
+	for pos, route := range routes {
+		if route.BeginTransport == isTransport {
+			delete(routes, pos)
+		}
+	}
+	return
 }
-
-func filterGarage(comparison string, garage string, routes []maped.Route) (err error) {
-
+func filterGarage(context appengine.Context, garage bool, routes maped.Routes) (err error) {
+	context.Infof("filterGarage start")
+	for pos, route := range routes {
+		if route.Garage == garage {
+			delete(routes, pos)
+		}
+	}
+	return
 }
-*/
 
 func routeKey(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "Routes", "default_route", 0, nil)
