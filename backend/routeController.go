@@ -28,13 +28,15 @@ func GetAllRoutes(context appengine.Context) (routes maped.Routes, err error) {
 		routes[pos] = routeTMP
 	}
 
-	err = filterDistance(context, "40", "600", routes)
-	err = filterSlope(context, "-15", "80", routes)
-	err = filterTotalAscent(context, "200", routes)
-	err = filterScore(context, "4", routes)
-	err = filterSignal(context, true, routes)
-	err = filterGarage(context, false, routes)
-	err = filterBeginTransport(context, true, routes)
+	//err = filterDistance(context, "40", "600", routes)
+	//err = filterScore(context, "4", routes)
+	//err = filterSlope(context, "-15", "80", routes)
+	//err = filterTotalAscent(context, "200", routes)
+	//err = filterfilterDifficulty(context, "alta", routes)
+
+	//err = filterSignal(context, false, routes)
+	//err = filterGarage(context, true, routes)
+	//err = filterBeginTransport(context, false, routes)
 	return
 }
 
@@ -132,7 +134,7 @@ func filterScore(context appengine.Context, score string, routes maped.Routes) (
 	context.Infof("filterScore start")
 	for pos, route := range routes {
 		context.Infof("score: %s", score)
-		if route.Score == score {
+		if route.Score != score {
 			delete(routes, pos)
 		}
 	}
@@ -143,7 +145,7 @@ func filterSignal(context appengine.Context, signal bool, routes maped.Routes) (
 	context.Infof("filterSignal start")
 	for pos, route := range routes {
 		context.Infof("signal: %s", signal)
-		if route.Signal == signal {
+		if route.Signal != signal {
 			delete(routes, pos)
 		}
 	}
@@ -153,7 +155,7 @@ func filterSignal(context appengine.Context, signal bool, routes maped.Routes) (
 func filterBeginTransport(context appengine.Context, isTransport bool, routes maped.Routes) (err error) {
 	context.Infof("filterBeginTransport start")
 	for pos, route := range routes {
-		if route.BeginTransport == isTransport {
+		if route.BeginTransport != isTransport {
 			delete(routes, pos)
 		}
 	}
@@ -162,7 +164,7 @@ func filterBeginTransport(context appengine.Context, isTransport bool, routes ma
 func filterGarage(context appengine.Context, garage bool, routes maped.Routes) (err error) {
 	context.Infof("filterGarage start")
 	for pos, route := range routes {
-		if route.Garage == garage {
+		if route.Garage != garage {
 			delete(routes, pos)
 		}
 	}
@@ -177,25 +179,26 @@ func routeKey(c appengine.Context) *datastore.Key {
 func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	g := maped.Route{
-		Title:          "Salas - Pola de Allande",
-		Description:    "Pues ni puta idea, porque cuando lelgamos al puticlub \"Nenas\" nos volvimos con la rodilla debajo del brazo",
+		Title:          "Grado - Pola de Lena",
+		Description:    "Me lo acabo de inventa",
 		CreationDate:   time.Now(),
 		Distance:       52,
-		BeginLoc:       "Salas",
-		EndLoc:         "Pola de Allande",
-		Difficulty:     "Depende de tu rodilla",
+		BeginLoc:       "Grao",
+		EndLoc:         "Pola de Lena",
+		Difficulty:     "¿no te acabo de decir que me lo acabo de inventar? no preguntes",
 		Road:           true,
 		Mountain:       true,
 		Path:           false,
-		Comments:       []string{"Mola pila", "Habia gastroenteritis", "Rompi la rodilla", "No sabia que los paragüayos hablaban"},
-		Author:         "Menti",
-		Maps:           "mira como mola __-/^^^^^^^\\____",
+		Comments:       []string{"Hecho para probar totalAscent"},
+		Author:         "Sandoval",
+		Maps:           "8===D",
 		Duration:       time.Now(), //change this to 3 or another int
-		Slope:          1200,
+		Slope:          -12,
 		Photos:         "nah",
-		Score:          "over 9000",
+		Score:          "4",
 		Signal:         true,
 		BeginTransport: true,
+		TotalAscent:    14.0,
 	}
 	key := datastore.NewIncompleteKey(c, "Routes", routeKey(c))
 	_, err := datastore.Put(c, key, &g)
