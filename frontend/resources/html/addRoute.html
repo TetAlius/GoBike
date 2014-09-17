@@ -1,0 +1,137 @@
+{{define "addRoute"}}
+
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+         <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">GoBike</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <ul class="dropdown-menu" role="add route" style="padding: 15px;min-width: 250px;">
+			<h1>Add a new route</h1>
+            <li>
+               <div class="row">
+                  <div class="col-md-12">
+                     <form class="form" role="form" method="post" data-toggle="validator" action="addRoute" accept-charset="UTF-8" id="addRoute-nav">
+                        <div class="form-group">
+                          <label for="">Title:</label>
+                          <input type="text" class="form-control" placeholder="Title" id="title"name="title" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                          <p align="left">Description:</p>
+							<textarea id="description"  rows="3" cols="40" required>Write a description here</textarea>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						 <div class="form-group">
+                          <label for="">Distance:</label>
+                          <input type="text" class="form-control" placeholder="Distance (measured in meters)" id="distance"name="distance" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						 <div class="form-group">
+                          <label for="">Starts in:</label>
+                          <input type="text" class="form-control" placeholder="Write the name of a location" id="beginLoc"name="beginLoc" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                          <label for="">Ends in:</label>
+                          <input type="text" class="form-control" placeholder="Write the name of a location" id="endLoc"name="endLoc" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                          <label for="">Difficulty:</label>
+                          <input type="text" list=difficultyLevels id="difficulty"name="difficulty" required>
+							<datalist id="difficultyLevels">
+							<option>Alta
+							<option>Media
+							<option>Baja
+							</datalist>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                          <label for="">Field:</label>
+                          	<input type="checkBox" id="road"name="road">Road
+							<input type="checkBox" id="mountain"name="mountain">Montain
+							<input type="checkBox" id="path"name="path">Path
+                           <div class="help-block with-errors"></div>
+                        </div>
+						 <div class="form-group">
+                          <label for="">Slope:</label>
+                          <input type="text" class="form-control" placeholder="Slope" id="slope"name="slope" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                          <label for="">Score:</label>
+						<form action="">
+							<input type="radio" name="score" value="oneStar">&#9733;
+							<input type="radio" name="score" value="twoStars">&#9733;&#9733;
+							<input type="radio" name="score" value="threeStars">&#9733;&#9733;&#9733;
+							<input type="radio" name="score" value="fourStars">&#9733;&#9733;&#9733;&#9733;
+							<input type="radio" name="score" value="fiveStars">&#9733;&#9733;&#9733;&#9733;&#9733;
+						</form>	
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                          <label for="">Total Ascent:</label>
+                          <input type="text" class="form-control" placeholder="Total Ascent (in meters)" id="totalAcent"name="totalAscent" required>
+                           <div class="help-block with-errors"></div>
+                        </div>
+						<div class="form-group">
+                         <label for="">Signal:</label>
+                          	<input type="checkBox" id="signal"name="signal">Is Signposted?
+                        </div>
+						<div class="form-group">
+                         <label for="">Begin transport:</label>
+                          	<input type="checkBox" id="beginTransport"name="beginTransport">No transport?
+                        </div>
+						<div class="form-group">
+                         <label for="">Garage:</label>
+                          	<input type="checkBox" id="garage"name="garage">Garage?
+                        </div>
+						<div class="form-group">
+                           <button type="submit" class="btn btn-success btn-block btn-uploadPhoto">Upload photos</button>
+							No photos uploaded yet
+                        </div>
+                        <div class="form-group">
+                           <button type="submit" class="btn btn-success btn-block btn-addRoute">Send!</button>
+                        </div>
+                     </form>
+               </div>
+            </li>
+            <!--<form class="navbar-form navbar-left"  data-toggle="validator" role="login" method="post" action="/login">
+            <div class="form-group">
+                  <label for="username">Name:</label>
+                <input type="text" class="form-control" placeholder="Username" id="userName" required>
+                <div class="help-block with-errors"></div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password:</label>
+                    <input type="password" class="form-control" placeholder="Password" id="password" required>
+                    <div class="help-block with-errors"></div>
+              </div>
+              <div class="divider"></div>
+              <a class="btn btn-default" href="/register">Sign Up</a>
+            <button type="submit" class="btn btn-default pull-right">Sign In</button>
+            <li class="divider"></li>
+            <a class="btn btn-default" href="/registerFacebook"><i class="fa fa-facebook"></i></a>
+            <a class="btn btn-default" href="/registerGoogle"><i class="fa fa-google-plus"></i></a>
+            <a class="btn btn-default" href="/registerTwitter"><i class="fa fa-twitter"></i></a>
+            <a class="btn btn-default" href="/registerLinkedin"><i class="fa fa-linkedin"></i></a>
+          </form> -->
+          </ul>
+        </li>
+       </ul>
+  </div><!-- /.container-fluid -->
+</div>
+</div>
+{{end}}
