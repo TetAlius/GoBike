@@ -16,14 +16,14 @@
           <input type="email" name="Email" class="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" required>
           <div class="help-block with-errors"></div>
         </div>
-        <div class="form-group">
+        <div class="form-group form-box">
           <label for="inputPassword" class="control-label">Password</label>
           <div class="row">
             <div class="col-lg-6">
-              <input type="password" data-toggle="validator" class="form-control" id="inputPassword" name="Password" placeholder="Password" required>
+              <input type="password" data-toggle="validator" class="form-control firstPassword" id="inputPassword" name="Password" placeholder="Password" required>
             </div><!--/.col-lg-6-->
             <div class="col-lg-6">
-              <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm" required>
+              <input type="password" class="form-control secondPassword" id="inputPasswordConfirm" data-match="#inputPassword" data-match-error="Whoops, these don't match" placeholder="Confirm" required>
               <div class="help-block with-errors"></div>
             </div><!--/.col-lg-6-->
           </div><!--/.row-->

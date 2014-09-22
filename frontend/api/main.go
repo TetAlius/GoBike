@@ -25,4 +25,6 @@ func init() {
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/registerPost", registerPostHandler)
 	http.HandleFunc("/activateUser", activateUser)
+
+	http.HandleFunc("/addRoute", addRouteHandler)
 }

@@ -17,6 +17,17 @@
 	background-color:#73A2EF;
 }
 
+@media (min-width: 768px) {
+.form-box .firstPassword{
+		border-radius: 5px 5px 0 0;
+}
+
+.form-box .secondPassword{
+		border-radius: 0 0 5px 5px;
+		border-top: 0;
+}
+}
+
 .btn-google:hover,
 .btn-google:focus,
 .btn-google:active,
