@@ -3,9 +3,12 @@ package frontend
 import (
 	"appengine"
 	"github.com/TetAlius/GoBike/backend"
+	"github.com/TetAlius/GoBike/backend/maped"
 	"html/template"
 	"log"
 	"net/http"
+	"time"
+	"strconv"
 	"appengine/blobstore"
 )
 
@@ -47,10 +50,6 @@ func insertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 	//t.Execute(w, map[string]string{"PageTitle": "GoBike - Insert Route"})
 }
 
-func serve(w http.ResponseWriter, r *http.Request) {
-        blobstore.Send(w, appengine.BlobKey(r.FormValue("blobKey")))
-}
-
 func upload(w http.ResponseWriter, r *http.Request) {
         c := appengine.NewContext(r)
         blobs, _, err := blobstore.ParseUpload(r)
@@ -63,5 +62,34 @@ func upload(w http.ResponseWriter, r *http.Request) {
                 http.Redirect(w, r, "/", http.StatusFound)
                 return
         }
-        http.Redirect(w, r, "/serve/?blobKey="+string(file[0].BlobKey), http.StatusFound)
+		g := maped.Route{
+			Title:          r.FormValue("title"),
+			Description:    r.FormValue("description"),
+			CreationDate:   time.Now(),
+			Distance:       r.FormValue("distance"),
+			BeginLoc:       r.FormValue("beginLoc"),
+			EndLoc:         r.FormValue("endLoc"),
+			Difficulty:     r.FormValue("difficulty"),
+			Road:           strconv.ParseBool(r.FormValue("road")),
+			Mountain:       r.FormValue("mountain"),
+			Path:           r.FormValue("path"),
+			Comments:       []string{""},
+			Author:         r.FormValue("blobKey"),
+			Maps:           r.FormValue("blobKey"),
+			Duration:       time.Now(), //change this to 3 or another int
+			Slope:          -12,
+			Photos:         []string{string(file[0].BlobKey)},
+			Score:          1,
+			Signal:         r.FormValue("signal"),
+			BeginTransport: r.FormValue("beginTransport"),
+			TotalAscent:    r.FormValue("totalAscent"),
+		}
+	key := datastore.NewIncompleteKey(c, "Routes", routeKey(c))
+	_, err := datastore.Put(c, key, &g)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	http.Redirect(w, r, "/", http.StatusFound)
+	http.Redirect(w, r, "/", http.StatusFound)
 }

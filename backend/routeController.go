@@ -172,39 +172,3 @@ func filterGarage(context appengine.Context, garage bool, routes maped.Routes) (
 func routeKey(c appengine.Context) *datastore.Key {
 	return datastore.NewKey(c, "Routes", "default_route", 0, nil)
 }
-
-// InsertRoutesHandler the routes handler
-/*
-func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	g := maped.Route{
-		Title:          "Grado - Pola de Lena",
-		Description:    "Me lo acabo de inventa",
-		CreationDate:   time.Now(),
-		Distance:       52,
-		BeginLoc:       "Grao",
-		EndLoc:         "Pola de Lena",
-		Difficulty:     "¿no te acabo de decir que me lo acabo de inventar? no preguntes",
-		Road:           true,
-		Mountain:       true,
-		Path:           false,
-		Comments:       []string{"Hecho para probar totalAscent"},
-		Author:         "Sandoval",
-		Maps:           "8===D",
-		Duration:       time.Now(), //change this to 3 or another int
-		Slope:          -12,
-		Photos:         "nah",
-		Score:          "4",
-		Signal:         true,
-		BeginTransport: true,
-		TotalAscent:    14.0,
-	}
-	key := datastore.NewIncompleteKey(c, "Routes", routeKey(c))
-	_, err := datastore.Put(c, key, &g)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	http.Redirect(w, r, "/", http.StatusFound)
-}
-*/

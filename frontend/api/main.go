@@ -19,7 +19,6 @@ func init() {
 	http.HandleFunc("/google", loginGoogleHandler)
 	http.HandleFunc("/route/", singleRouteHandler)
 	http.HandleFunc("/insert", insertRoutesHandler)
-    http.HandleFunc("/serve/", serve)
     http.HandleFunc("/uploadPhoto", upload)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)

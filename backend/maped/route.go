@@ -22,7 +22,7 @@ type Route struct {
 	Duration       time.Time // filter //must be int, just a workarround
 	Slope          float64   // filter
 	TotalAscent    float64   // filter
-	Photos         string
+	Photos         []string
 	Score          string // filter
 	Signal         bool   // filer
 	BeginTransport bool   // filter
