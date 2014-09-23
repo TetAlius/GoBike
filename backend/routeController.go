@@ -5,9 +5,7 @@ import (
 	"appengine/datastore"
 	"errors"
 	"github.com/TetAlius/GoBike/backend/maped"
-	"net/http"
 	"strconv"
-	"time"
 )
 
 //GetAllRoutes Returns all the routes in the DB
@@ -176,6 +174,7 @@ func routeKey(c appengine.Context) *datastore.Key {
 }
 
 // InsertRoutesHandler the routes handler
+/*
 func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	g := maped.Route{
@@ -208,3 +207,4 @@ func InsertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	http.Redirect(w, r, "/", http.StatusFound)
 }
+*/

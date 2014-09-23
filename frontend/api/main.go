@@ -3,7 +3,6 @@ package frontend
 import (
 	"net/http"
 
-	"github.com/TetAlius/GoBike/backend"
 )
 
 func init() {
@@ -19,10 +18,17 @@ func init() {
 	http.HandleFunc("/", routesHandler)
 	http.HandleFunc("/google", loginGoogleHandler)
 	http.HandleFunc("/route/", singleRouteHandler)
-	http.HandleFunc("/insert", backend.InsertRoutesHandler)
+	http.HandleFunc("/insert", insertRoutesHandler)
+    http.HandleFunc("/serve/", serve)
+    http.HandleFunc("/uploadPhoto", upload)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/registerPost", registerPostHandler)
 	http.HandleFunc("/activateUser", activateUser)
+<<<<<<< HEAD
 	http.HandleFunc("/map", mapHandler)
+=======
+
+	http.HandleFunc("/addRoute", addRouteHandler)
+>>>>>>> FETCH_HEAD
 }
