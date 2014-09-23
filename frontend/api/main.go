@@ -2,7 +2,6 @@ package frontend
 
 import (
 	"net/http"
-
 )
 
 func init() {
@@ -19,11 +18,17 @@ func init() {
 	http.HandleFunc("/google", loginGoogleHandler)
 	http.HandleFunc("/route/", singleRouteHandler)
 	http.HandleFunc("/insert", insertRoutesHandler)
+<<<<<<< HEAD
     http.HandleFunc("/uploadPhoto", upload)
+=======
+	http.HandleFunc("/serve/", serve)
+	http.HandleFunc("/uploadPhoto", upload)
+>>>>>>> 9c3313ae64a719148b18bc8159c37be6fef22214
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/registerPost", registerPostHandler)
 	http.HandleFunc("/activateUser", activateUser)
+	http.HandleFunc("/map", mapHandler)
 
 	http.HandleFunc("/addRoute", addRouteHandler)
 }
