@@ -1,16 +1,33 @@
-$(document).ready(function() {
+function success(position) {
+  var mapcanvas = document.createElement('div');
+  mapcanvas.id = 'mapcontainer';
+  mapcanvas.style.height = '400px';
+  mapcanvas.style.width = '600px';
 
-var map;
-function initialize() {
-  var mapOptions = {
-    zoom: 8,
-    center: new google.maps.LatLng(-34.397, 150.644),
+  document.querySelector('article').appendChild(mapcanvas);
+
+  var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+  var options = {
+    zoom: 15,
+    center: coords,
+    mapTypeControl: false,
+    navigationControlOptions: {
+      style: google.maps.NavigationControlStyle.SMALL
+    },
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-                            mapOptions);
+  var map = new google.maps.Map(document.getElementById("mapcontainer"), options);
+
+  var marker = new google.maps.Marker({
+    position: coords,
+    map: map,
+    title:"You are here!"
+  });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
-
-});
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(success);
+} else {
+  error('Geo Location is not supported');
+}
