@@ -52,16 +52,17 @@ func insertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 
 func upload(w http.ResponseWriter, r *http.Request) {
         c := appengine.NewContext(r)
-        blobs, _, err := blobstore.ParseUpload(r)
+       /** blobs, _, err := blobstore.ParseUpload(r)
         if err != nil {
                 return
         }
+        
         file := blobs["file"]
         if len(file) == 0 {
                 c.Errorf("no file uploaded")
                 http.Redirect(w, r, "/", http.StatusFound)
                 return
-        }
+        }**/
         road, _ := strconv.ParseBool(r.FormValue("road"))
         distance, _ := strconv.ParseFloat(r.FormValue("distance"),64)
         mountain,_ := strconv.ParseBool(r.FormValue("mountain"))
@@ -87,7 +88,7 @@ func upload(w http.ResponseWriter, r *http.Request) {
 			Maps:           r.FormValue("blobKey"),
 			Duration:       time.Now(), //change this to 3 or another int
 			Slope:          -12,
-			Photos:         []string{string(file[0].BlobKey)},
+			Photos:         []string{"Fotuquis"},//[]string{string(file[0].BlobKey)},
 			Score:          "4",
 			Signal:			signal,		
 			BeginTransport: beginTransport,
