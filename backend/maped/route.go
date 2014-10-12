@@ -20,7 +20,7 @@ type Route struct {
 	Comments       []string
 	Author         string
 	Maps           string
-	Duration       int     // filter
+	Duration       int64   // filter
 	Slope          float64 // filter
 	TotalAscent    float64 // filter
 	Photos         []string

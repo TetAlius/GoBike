@@ -51,18 +51,18 @@ func insertRoutesHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func upload(w http.ResponseWriter, r *http.Request) {
-<<<<<<< HEAD
 	c := appengine.NewContext(r)
-	blobs, _, err := blobstore.ParseUpload(r)
-	if err != nil {
-		return
-	}
-	file := blobs["file"]
-	if len(file) == 0 {
-		c.Errorf("no file uploaded")
-		http.Redirect(w, r, "/", http.StatusFound)
-		return
-	}
+	/** blobs, _, err := blobstore.ParseUpload(r)
+	  if err != nil {
+	          return
+	  }
+
+	  file := blobs["file"]
+	  if len(file) == 0 {
+	          c.Errorf("no file uploaded")
+	          http.Redirect(w, r, "/", http.StatusFound)
+	          return
+	  }**/
 	road, _ := strconv.ParseBool(r.FormValue("road"))
 	distance, _ := strconv.ParseFloat(r.FormValue("distance"), 64)
 	mountain, _ := strconv.ParseBool(r.FormValue("mountain"))
@@ -71,6 +71,7 @@ func upload(w http.ResponseWriter, r *http.Request) {
 	beginTransport, _ := strconv.ParseBool(r.FormValue("signal"))
 	garage, _ := strconv.ParseBool(r.FormValue("garage"))
 	totalAscent, _ := strconv.ParseFloat(r.FormValue("totalAscent"), 64)
+	duration, _ := strconv.ParseInt(r.FormValue("duration"), 32, 32)
 
 	g := maped.Route{
 		Title:          r.FormValue("title"),
@@ -86,61 +87,15 @@ func upload(w http.ResponseWriter, r *http.Request) {
 		Comments:       []string{""},
 		Author:         "Menti",
 		Maps:           r.FormValue("blobKey"),
-		Duration:       time.Now(), //change this to 3 or another int
+		Duration:       duration,
 		Slope:          -12,
-		Photos:         []string{string(file[0].BlobKey)},
+		Photos:         []string{"Fotuquis"}, //[]string{string(file[0].BlobKey)},
 		Score:          "4",
 		Signal:         signal,
 		BeginTransport: beginTransport,
 		Garage:         garage,
 		TotalAscent:    totalAscent,
 	}
-=======
-        c := appengine.NewContext(r)
-       /** blobs, _, err := blobstore.ParseUpload(r)
-        if err != nil {
-                return
-        }
-        
-        file := blobs["file"]
-        if len(file) == 0 {
-                c.Errorf("no file uploaded")
-                http.Redirect(w, r, "/", http.StatusFound)
-                return
-        }**/
-        road, _ := strconv.ParseBool(r.FormValue("road"))
-        distance, _ := strconv.ParseFloat(r.FormValue("distance"),64)
-        mountain,_ := strconv.ParseBool(r.FormValue("mountain"))
-        path,_ := strconv.ParseBool(r.FormValue("path"))
-        signal, _ := strconv.ParseBool(r.FormValue("signal"))
-        beginTransport, _ := strconv.ParseBool(r.FormValue("signal"))
-        garage, _ := strconv.ParseBool(r.FormValue("garage"))
-        totalAscent, _ := strconv.ParseFloat(r.FormValue("totalAscent"), 64)
-
-		g := maped.Route{
-			Title:          r.FormValue("title"),
-			Description:    r.FormValue("description"),
-			CreationDate:   time.Now(),
-			Distance:       distance,
-			BeginLoc:       r.FormValue("beginLoc"),
-			EndLoc:         r.FormValue("endLoc"),
-			Difficulty:     r.FormValue("difficulty"),
-			Road:           road,
-			Mountain:       mountain,
-			Path:           path,
-			Comments:       []string{""},
-			Author:         "Menti",
-			Maps:           r.FormValue("blobKey"),
-			Duration:       time.Now(), //change this to 3 or another int
-			Slope:          -12,
-			Photos:         []string{"Fotuquis"},//[]string{string(file[0].BlobKey)},
-			Score:          "4",
-			Signal:			signal,		
-			BeginTransport: beginTransport,
-			Garage:			garage,
-			TotalAscent:    totalAscent,
-		}
->>>>>>> FETCH_HEAD
 
 	http.Redirect(w, r, "/", http.StatusFound)
 	backend.AddRoute(g, c)
