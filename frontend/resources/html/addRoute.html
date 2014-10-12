@@ -39,109 +39,6 @@
           </div>
 
 
-<<<<<<< HEAD
-    <div class="container">
-      <h1>Add a new route</h1>
-      <li>
-        <div class="row">
-          <div class="col-md-12">
-            <form class="form" role="form" method="post" data-toggle="validator" action="{{.UploadURL}}" accept-charset="UTF-8" id="addRoute-nav" enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="">Title:</label>
-                <input type="text" class="form-control" placeholder="Title" id="title"name="title" required>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <p align="left">Description:</p>
-                <textarea id="description" name="description" rows="3" cols="40" required>Write a description here</textarea>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <label for="">Distance:</label>
-                <input type="text" class="form-control" placeholder="Distance (measured in meters)" id="distance"name="distance" required>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <label for="">Starts in:</label>
-                <input type="text" class="form-control" placeholder="Write the name of a location" id="beginLoc"name="beginLoc" required>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <label for="">Ends in:</label>
-                <input type="text" class="form-control" placeholder="Write the name of a location" id="endLoc"name="endLoc" required>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group">
-                <label for="">Difficulty:</label>
-                <input type="text" list=difficultyLevels id="difficulty"name="difficulty" required>
-                <datalist id="difficultyLevels">
-                  <option>Alta
-                    <option>Media
-                      <option>Baja
-                      </datalist>
-                      <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group">
-                      <label for="">Field:</label>
-                      <input type="checkBox" id="road"name="road">Road
-                      <input type="checkBox" id="mountain"name="mountain">Montain
-                      <input type="checkBox" id="path"name="path">Path
-                      <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group">
-                      <label for="">Slope:</label>
-                      <input type="text" class="form-control" placeholder="Slope" id="slope"name="slope" required>
-                      <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group">
-                      <label for="">Score:</label>
-                      <!--	<form action="">
-                      <input type="radio" name="score" value="oneStar">&#9733;
-                      <input type="radio" name="score" value="twoStars">&#9733;&#9733;
-                      <input type="radio" name="score" value="threeStars">&#9733;&#9733;&#9733;
-                      <input type="radio" name="score" value="fourStars">&#9733;&#9733;&#9733;&#9733;
-                      <input type="radio" name="score" value="fiveStars">&#9733;&#9733;&#9733;&#9733;&#9733;
-                    </form>	 !-->
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <label for="">Total Ascent:</label>
-                    <input type="text" class="form-control" placeholder="Total Ascent (in meters)" id="totalAcent"name="totalAscent" required>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <label for="">Signal:</label>
-                    <input type="checkBox" id="signal"name="signal">Is Signposted?
-                  </div>
-                  <div class="form-group">
-                    <label for="">Begin transport:</label>
-                    <input type="checkBox" id="beginTransport"name="beginTransport">No transport?
-                  </div>
-                  <div class="form-group">
-                    <label for="">Garage:</label>
-                    <input type="checkBox" id="garage"name="garage">Garage?
-                  </div>
-                  <div class="form-group">
-                    Upload File: <input type="file" name="file"><br>
-                  </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-block btn-addRoute">Send!</button>
-                  </div>
-                </form>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.container-fluid -->
-  </div>
-</div>
-
-</div><!--/.wrap-->
-{{template "bootscript"}}
-<script src="/js/validator.js"></script>
-</body>
-=======
           <datalist id="difficultyLevels">
             <option>Alta</option>
             <option>Media</option>
@@ -190,14 +87,13 @@
             <input type="checkBox" id="garage" name="garage">Garage?
           </div>
           <div class="form-group">
-            Upload File: <input type="file" name="file"><br>      
+            Upload File: <input type="file" name="file"><br>
           </div>
           <button type="submit" class="btn btn-success btn-block btn-addRoute">Send!</button>
-        </form>                        
+        </form>
       </div><!-- /.container-->
     </div><!-- /.wrap-->
     {{template "bootscript"}}
     <script src="/js/validator.js"></script>
   </body>
->>>>>>> FETCH_HEAD
 </html>
