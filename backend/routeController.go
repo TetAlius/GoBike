@@ -172,7 +172,7 @@ func filterGarage(context appengine.Context, garage bool, routes maped.Routes) (
 //AddRoute adds a new Route
 func AddRoute(route maped.Route, context appengine.Context) {
 	key := datastore.NewIncompleteKey(context, "Routes", routeKey(context))
-	route.ID = key.AppID()
+	route.ID = key.Encode()
 	_, err := datastore.Put(context, key, &route)
 	if err != nil {
 		return
