@@ -69,6 +69,7 @@ func upload(w http.ResponseWriter, r *http.Request) {
         signal, _ := strconv.ParseBool(r.FormValue("signal"))
         beginTransport, _ := strconv.ParseBool(r.FormValue("signal"))
         garage, _ := strconv.ParseBool(r.FormValue("garage"))
+        totalAscent, _ := strconv.ParseFloat(r.FormValue("totalAscent"), 64)
 
 		g := maped.Route{
 			Title:          r.FormValue("title"),
@@ -82,17 +83,18 @@ func upload(w http.ResponseWriter, r *http.Request) {
 			Mountain:       mountain,
 			Path:           path,
 			Comments:       []string{""},
-			Author:         r.FormValue("blobKey"),
+			Author:         "Menti",
 			Maps:           r.FormValue("blobKey"),
 			Duration:       time.Now(), //change this to 3 or another int
 			Slope:          -12,
 			Photos:         []string{string(file[0].BlobKey)},
-			Score:          "1",
+			Score:          "4",
 			Signal:			signal,		
 			BeginTransport: beginTransport,
 			Garage:			garage,
-			TotalAscent:    r.FormValue("totalAscent"),
+			TotalAscent:    totalAscent,
 		}
 
 	http.Redirect(w, r, "/", http.StatusFound)
+	backend.AddRoute(g, c)
 }
