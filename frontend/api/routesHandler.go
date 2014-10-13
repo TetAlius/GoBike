@@ -62,34 +62,37 @@ func upload(w http.ResponseWriter, r *http.Request) {
                 http.Redirect(w, r, "/", http.StatusFound)
                 return
         }
+        road, _ := strconv.ParseBool(r.FormValue("road"))
+        distance, _ := strconv.ParseFloat(r.FormValue("distance"),64)
+        mountain,_ := strconv.ParseBool(r.FormValue("mountain"))
+        path,_ := strconv.ParseBool(r.FormValue("path"))
+        signal, _ := strconv.ParseBool(r.FormValue("signal"))
+        beginTransport, _ := strconv.ParseBool(r.FormValue("signal"))
+        garage, _ := strconv.ParseBool(r.FormValue("garage"))
+
 		g := maped.Route{
 			Title:          r.FormValue("title"),
 			Description:    r.FormValue("description"),
 			CreationDate:   time.Now(),
-			Distance:       r.FormValue("distance"),
+			Distance:       distance,
 			BeginLoc:       r.FormValue("beginLoc"),
 			EndLoc:         r.FormValue("endLoc"),
 			Difficulty:     r.FormValue("difficulty"),
-			Road:           strconv.ParseBool(r.FormValue("road")),
-			Mountain:       r.FormValue("mountain"),
-			Path:           r.FormValue("path"),
+			Road:           road,
+			Mountain:       mountain,
+			Path:           path,
 			Comments:       []string{""},
 			Author:         r.FormValue("blobKey"),
 			Maps:           r.FormValue("blobKey"),
 			Duration:       time.Now(), //change this to 3 or another int
 			Slope:          -12,
 			Photos:         []string{string(file[0].BlobKey)},
-			Score:          1,
-			Signal:         r.FormValue("signal"),
-			BeginTransport: r.FormValue("beginTransport"),
+			Score:          "1",
+			Signal:			signal,		
+			BeginTransport: beginTransport,
+			Garage:			garage,
 			TotalAscent:    r.FormValue("totalAscent"),
 		}
-	key := datastore.NewIncompleteKey(c, "Routes", routeKey(c))
-	_, err := datastore.Put(c, key, &g)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	http.Redirect(w, r, "/", http.StatusFound)
+
 	http.Redirect(w, r, "/", http.StatusFound)
 }
